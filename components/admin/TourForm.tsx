@@ -283,16 +283,16 @@ export default function TourForm({
       </div>
 
       <div>
-        <label className={labelClass}>Price table: "Tasting / Drinks" column (optional)</label>
+        <label className={labelClass}>Price table: "Dome Climb Access" column (optional)</label>
         <input
           value={tour.priceTableFeature || ""}
           onChange={(e) => update("priceTableFeature", e.target.value)}
           className={inputClass}
-          placeholder="e.g. Dutch Wine & Cheese"
+          placeholder="e.g. ✅ Timed Dome Climb"
         />
         <p className="mt-1 text-xs text-stone-500">
-          Shown in the homepage price-comparison table's "Tasting / Drinks" column for this tour. Leave
-          blank to show "No".
+          Shown in the homepage price-comparison table's "Dome Climb Access" column for this tour. Leave
+          blank to auto-fill "✅ Timed Dome Climb" (if the tour ID contains "dome") or "Standard Pass".
         </p>
       </div>
 
