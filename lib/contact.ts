@@ -33,7 +33,7 @@ const DEFAULT_CONTACT: ContactPageContent = {
   heroHeading: "Get in Touch with Our Florence Travel Team",
   heroSubheading:
     "Questions about booking Duomo Florence tickets, Brunelleschi Dome Climb time slots, Giotto Tower passes, or partnership inquiries? Reach out to our team directly.",
-  email: "support@florenceduomotickets.com",
+  email: "livetravelpartner@gmail.com",
   emailLabel: "Email Us Directly",
   emailNote: "We typically respond within 1–2 business days.",
   reasonsHeading: "How We Can Help",

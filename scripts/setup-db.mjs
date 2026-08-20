@@ -630,7 +630,7 @@ async function seedAboutPage() {
 }
 
 async function seedContactPage() {
-  const rows = await sql`SELECT hero_heading FROM contact_page WHERE id = 1`;
+  const rows = await sql`SELECT hero_heading, email FROM contact_page WHERE id = 1`;
   // Matches DEFAULT_CONTACT in lib/contact.ts (already correctly Florence-
   // branded — this seed previously still had leftover Colosseum Arena
   // Entry copy, including a support@colosseumarenaentry.com email address,
@@ -647,7 +647,7 @@ async function seedContactPage() {
     heroHeading: "Get in Touch with Our Florence Travel Team",
     heroSubheading:
       "Questions about booking Duomo Florence tickets, Brunelleschi Dome Climb time slots, Giotto Tower passes, or partnership inquiries? Reach out to our team directly.",
-    email: "support@florenceduomotickets.com",
+    email: "livetravelpartner@gmail.com",
     emailNote: "We typically respond within 1–2 business days.",
     reasonsHeading: "How We Can Help",
     footerNote:
@@ -662,9 +662,20 @@ async function seedContactPage() {
   const existing = rows[0];
   const looksLikeWrongBrand =
     existing && typeof existing.hero_heading === "string" && existing.hero_heading.includes("Rome");
+  // The contact email is standardized to livetravelpartner@gmail.com across
+  // every site in this family. Heal it on its own — regardless of the
+  // wrong-brand check above — so a row with otherwise-correct Florence copy
+  // but a stale support@ address still gets the right email.
+  const emailNeedsHealing = existing && existing.email !== c.email;
 
-  if (existing && !looksLikeWrongBrand) {
+  if (existing && !looksLikeWrongBrand && !emailNeedsHealing) {
     console.log("contact_page: already configured — skipping seed.");
+    return;
+  }
+
+  if (existing && !looksLikeWrongBrand && emailNeedsHealing) {
+    await sql`UPDATE contact_page SET email = ${c.email} WHERE id = 1`;
+    console.log("contact_page: updated contact email to livetravelpartner@gmail.com.");
     return;
   }
 
