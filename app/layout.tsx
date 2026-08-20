@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Outfit, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 import { resolveRobots } from "@/lib/seo";
@@ -21,6 +22,9 @@ const bodyFont = Plus_Jakarta_Sans({
 });
 
 const DEFAULT_OG_IMAGE = "/images/hero-duomo.jpg";
+
+// Google Analytics (GA4) measurement ID.
+const GA_MEASUREMENT_ID = "G-PX53K1HD53";
 
 const touristAttractionJsonLd = {
   "@context": "https://schema.org",
@@ -134,6 +138,18 @@ export default async function RootLayout({
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body className="font-body bg-[#F7F4EC] text-[#141D28] antialiased selection:bg-navy-700 selection:text-marble-50">
         {themeStyle && <style dangerouslySetInnerHTML={{ __html: themeStyle }} />}
+        {/* Google tag (gtag.js) — loaded with next/script's afterInteractive
+            strategy so it doesn't block first paint or hydration. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');`}
+        </Script>
         {children}
         <script
           type="application/ld+json"
