@@ -269,6 +269,12 @@ async function addSeoColumns() {
   await sql`ALTER TABLE tours ADD COLUMN IF NOT EXISTS price_table_feature TEXT NOT NULL DEFAULT ''`;
 
   await sql`ALTER TABLE about_page ADD COLUMN IF NOT EXISTS contact_prompt_html TEXT NOT NULL DEFAULT ''`;
+  // About page redesign: the page now uses one flowing rich-text "content"
+  // field (matching amsterdam/colosseum/arno) instead of the older
+  // structured intro/reasons/disclosure/cta columns above. Those old
+  // columns are left in place (not dropped) so lib/about.ts can migrate any
+  // real admin-authored copy still sitting in them into the new field.
+  await sql`ALTER TABLE about_page ADD COLUMN IF NOT EXISTS content TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE contact_page ADD COLUMN IF NOT EXISTS email_label TEXT NOT NULL DEFAULT 'Email Us Directly'`;
   await sql`ALTER TABLE privacy_policy ADD COLUMN IF NOT EXISTS last_updated_label TEXT NOT NULL DEFAULT 'Last updated: '`;
   await sql`ALTER TABLE privacy_policy ADD COLUMN IF NOT EXISTS empty_state_text TEXT NOT NULL DEFAULT E'This page hasn''t been filled in yet.'`;
@@ -501,55 +507,72 @@ async function seedSiteSettings() {
 }
 
 async function seedAboutPage() {
-  const [{ count }] = await sql`SELECT COUNT(*)::int AS count FROM about_page`;
-  if (count > 0) {
+  const rows = await sql`SELECT content, hero_heading FROM about_page WHERE id = 1`;
+  // Matches the DEFAULT_ABOUT content in lib/about.ts (single flowing
+  // rich-text page, same design as amsterdam/colosseum/arno).
+  const a = {
+    heroEyebrow: "About Us",
+    heroHeading: "Your Trusted Guide to Duomo Florence Tickets & Brunelleschi Dome Climb",
+    heroSubheading:
+      "We help travelers navigate Florence Cathedral ticket passes, secure guaranteed Dome Climb reservations, avoid sold-out time slots, and experience Renaissance masterworks with licensed Italian art historians.",
+    heroImage: "/images/hero-duomo.jpg",
+    heroImageAlt: "Florence Cathedral Santa Maria del Fiore and Brunelleschi Dome at golden hour",
+    content: `<h2>Why We Created Duomo Florence Tickets</h2>
+<p>Visiting the Florence Cathedral complex is a bucket-list dream for millions of travelers, but the ticket booking process can be confusing. Between strict visitor caps on the 463-step Dome climb, multiple pass tiers (Brunelleschi vs Giotto vs Ghiberti), and hours of queues in Piazza del Duomo, finding the right ticket shouldn't be difficult.</p>
+<p>Duomo Florence Tickets is an independent travel portal dedicated to providing clear, transparent comparisons of official fast-track tickets, guaranteed Brunelleschi Dome climb access, and licensed historian-led guided tours in partnership with verified Italian providers.</p>
+<h2>How We Curate Florence Tours & Passes</h2>
+<p>Every ticket and guided experience featured on our site meets rigorous quality, reliability, and security standards.</p>
+<ul>
+<li><strong>Guaranteed Timed Dome Climb Entry</strong> — Every pre-booked Brunelleschi Pass comes with an official timed reservation to climb the 463 steps without sold-out risk.</li>
+<li><strong>Licensed Florence Art Historian Guides</strong> — Our featured guided tours are led by certified Italian art historians with exceptional traveler ratings.</li>
+<li><strong>100% Free 24h Cancellation</strong> — Transparent pricing with flexible 100% free cancellation up to 24 hours before your scheduled entry time.</li>
+<li><strong>Complete Cathedral Complex Access</strong> — All-inclusive passes covering Giotto's Bell Tower, the Baptistery, the Opera del Duomo Museum, and Santa Reparata Crypt.</li>
+</ul>
+<h2>Affiliate Transparency</h2>
+<p>When you book Florence Duomo tickets or tours through links on our site, we may receive an affiliate commission at no extra cost to you. This enables us to maintain up-to-date, independent travel guides and pricing data for global visitors.</p>
+<p>Have questions about visiting the Duomo? Get in touch with our team on our <a href="/contact">contact page</a>.</p>`,
+    metaTitle: "About Us | Duomo Florence Tickets & Dome Climb Guide",
+    metaDescription:
+      "Learn about Duomo Florence Tickets: our mission, curation standards, and independent guide to the best Florence Cathedral passes and Dome climb access.",
+  };
+  const existing = rows[0];
+  const hasRealContent = existing && typeof existing.content === "string" && existing.content.trim().length > 0;
+  // A leftover bug in an earlier version of this script seeded About pages
+  // with Colosseum Arena Entry copy instead of Florence copy. Heal that
+  // specific, provably-wrong case automatically; otherwise never touch a
+  // row that already has real content (an admin may have edited it).
+  const looksLikeWrongBrand =
+    existing && typeof existing.hero_heading === "string" && existing.hero_heading.includes("Colosseum");
+
+  if (existing && hasRealContent && !looksLikeWrongBrand) {
     console.log("about_page: already configured — skipping seed.");
     return;
   }
-  const reasons = [
-    { icon: "ShieldCheckIcon", title: "Guaranteed Skip-The-Line Access", body: "Every pre-booked ticket comes with an official timed entry slot to bypass the 2-3 hour general admission lines." },
-    { icon: "StarIcon", title: "Licensed Rome Archaeologist Guides", body: "Our featured guided tours are led by certified Italian historians and archaeologists with exceptional traveler ratings." },
-    { icon: "LockIcon", title: "Free 24h Cancellation & Support", body: "Transparent pricing with flexible 100% free cancellation up to 24 hours before your scheduled entry time." },
-    { icon: "HeadsetIcon", title: "Exclusive Restricted Access", body: "Specialized passes providing entry to restricted areas including the Gladiator Arena Floor and Hypogeum Underground." },
-  ];
-  const a = {
-    heroEyebrow: "About Us",
-    heroHeading: "Your Trusted Guide to Colosseum Arena Tickets & Rome Tours",
-    heroSubheading:
-      "We help travelers navigate Colosseum ticket options, secure exclusive Arena Floor access, bypass multi-hour lines, and experience ancient Rome with licensed archaeologist guides.",
-    heroImage: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=2400&auto=format&fit=crop",
-    heroImageAlt: "Panoramic view of the Colosseum amphitheater in Rome, Italy",
-    introHeading: "Why We Created Colosseum Arena Entry",
-    introParagraph1:
-      "Visiting the Colosseum is a bucket-list dream for millions of travelers, but the ticket booking process can be confusing and overwhelming. Between general admission sell-outs, strict daily quotas, multiple entrance gates, and restricted underground zones, finding the right ticket shouldn't be difficult.",
-    introParagraph2:
-      "Colosseum Arena Entry is an independent travel portal dedicated to providing clear, transparent comparisons of official fast-track tickets, direct Gladiator Arena Floor access passes, and historian-led guided tours in partnership with licensed Italian providers.",
-    introImage: "https://images.unsplash.com/photo-1543429776-2782fc8e1acd?q=80&w=2400&auto=format&fit=crop",
-    introImageAlt: "Ancient Roman ruins and architecture of the Colosseum in Rome",
-    reasonsHeading: "How We Curate Rome Tours & Tickets",
-    reasonsSubheading: "Every ticket and guided experience featured on our site meets rigorous quality, reliability, and security standards.",
-    disclosureHeading: "Affiliate Transparency",
-    disclosureBody:
-      "When you book Colosseum tickets or tours through links on our site, we may receive an affiliate commission at no extra cost to you. This enables us to maintain up-to-date, independent travel guides and pricing data for global visitors.",
-    ctaText: "Ready to walk the Arena Floor in Rome?",
-    ctaButtonLabel: "Compare Colosseum Tickets & Passes",
-    metaTitle: "About Us | Colosseum Arena Entry Rome Guide",
-    metaDescription:
-      "Learn about Colosseum Arena Entry: our mission, curation standards, and independent guide to the best Colosseum tickets in Rome.",
-  };
+
+  if (existing) {
+    await sql`
+      UPDATE about_page SET
+        hero_eyebrow = ${a.heroEyebrow},
+        hero_heading = ${a.heroHeading},
+        hero_subheading = ${a.heroSubheading},
+        hero_image = ${a.heroImage},
+        hero_image_alt = ${a.heroImageAlt},
+        content = ${a.content},
+        meta_title = ${a.metaTitle},
+        meta_description = ${a.metaDescription}
+      WHERE id = 1
+    `;
+    console.log("about_page: healed mismatched/empty content with Florence About page copy.");
+    return;
+  }
+
   await sql`
     INSERT INTO about_page (
       id, hero_eyebrow, hero_heading, hero_subheading, hero_image, hero_image_alt,
-      intro_heading, intro_paragraph_1, intro_paragraph_2, intro_image, intro_image_alt,
-      reasons_heading, reasons_subheading, reasons,
-      disclosure_heading, disclosure_body, cta_text, cta_button_label,
-      meta_title, meta_description
+      content, meta_title, meta_description
     ) VALUES (
       1, ${a.heroEyebrow}, ${a.heroHeading}, ${a.heroSubheading}, ${a.heroImage}, ${a.heroImageAlt},
-      ${a.introHeading}, ${a.introParagraph1}, ${a.introParagraph2}, ${a.introImage}, ${a.introImageAlt},
-      ${a.reasonsHeading}, ${a.reasonsSubheading}, ${JSON.stringify(reasons)}::jsonb,
-      ${a.disclosureHeading}, ${a.disclosureBody}, ${a.ctaText}, ${a.ctaButtonLabel},
-      ${a.metaTitle}, ${a.metaDescription}
+      ${a.content}, ${a.metaTitle}, ${a.metaDescription}
     )
     ON CONFLICT (id) DO NOTHING
   `;
