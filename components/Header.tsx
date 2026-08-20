@@ -7,13 +7,9 @@ import { getHomepageContent } from "@/lib/homepage";
 export default async function Header() {
   const content = await getHomepageContent();
   const header = content.header;
-
-  const defaultNavLinks = [
-    { label: "Home", href: "/" },
-    { label: "Blog", href: "/blog" },
-    { label: "About Us", href: "/about" },
-    { label: "Contact Us", href: "/contact" },
-  ];
+  const navLinks = header.navLinks || [];
+  const ctaText = header.ctaText || header.bookNowText || "Book Tickets";
+  const ctaHref = header.ctaHref || "#tours";
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#EAE6DE]/60 bg-[#FAF8F5]/90 backdrop-blur-md transition-all duration-300">
@@ -21,15 +17,15 @@ export default async function Header() {
         <Logo
           logoImage={header.logoImage}
           logoAlt={header.logoAlt || "Florence Cathedral Entry"}
-          line1="FLORENCE"
-          line2="— CATHEDRAL ENTRY —"
+          line1={header.logoLine1}
+          line2={header.logoLine2}
         />
 
-        <HeaderNav links={defaultNavLinks} />
+        <HeaderNav links={navLinks.length ? navLinks : undefined} />
 
         <div className="flex items-center gap-3">
           <a
-            href={header.ctaHref || "#tours"}
+            href={ctaHref}
             className="hidden items-center gap-2.5 rounded-lg bg-[#112338] px-5 py-2.5 text-[11px] font-bold uppercase tracking-widest text-white shadow-sm transition-all hover:bg-[#1c3654] hover:shadow-md sm:inline-flex"
           >
             <svg
@@ -41,9 +37,9 @@ export default async function Header() {
             >
               <path d="M3 17h14M4 17V8M8 17V8M12 17V8M16 17V8M2 8l8-5 8 5M1 17h18" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            BOOK TICKETS
+            {ctaText.toUpperCase()}
           </a>
-          <MobileNav links={defaultNavLinks} ctaText="BOOK TICKETS" ctaHref={header.ctaHref || "#tours"} />
+          <MobileNav links={navLinks || []} ctaText={ctaText} ctaHref={ctaHref} />
         </div>
       </div>
     </header>

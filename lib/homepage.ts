@@ -6,6 +6,11 @@ export interface GalleryImage {
   label: string;
 }
 
+export interface HeroFeature {
+  title: string;
+  subtitle: string;
+}
+
 export interface TimelineRow {
   time: string;
   step: string;
@@ -50,8 +55,11 @@ export interface HighlightsSection {
 }
 
 export interface WhySection {
+  eyebrow: string;
   heading: string;
   intro: string;
+  image: string;
+  imageAlt: string;
   timelineHeading: string;
   timeline: TimelineRow[];
   learnHeading: string;
@@ -138,10 +146,18 @@ export interface BlogPageSection {
   promoRecommendedText: string;
 }
 
+export interface CtaBannerSection {
+  heading: string;
+  subtext: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
 export interface HomepageSections {
   tours: TourSection;
   highlights: HighlightsSection;
   why: WhySection;
+  ctaBanner: CtaBannerSection;
   tower: TowerSection;
   practical: PracticalSection;
   price: PriceSection;
@@ -186,6 +202,7 @@ export interface HomepageContent {
   heroImageAlt: string;
   heroVideo: string;
   heroGallery: GalleryImage[];
+  heroFeatures: HeroFeature[];
   heroCtaPrimaryText: string;
   heroCtaPrimaryHref: string;
   heroCtaSecondaryText: string;
@@ -268,6 +285,13 @@ export const DEFAULT_THEME: ThemeColors = {
   accent: "#A85C43",    // Terracotta
 };
 
+export const DEFAULT_HERO_FEATURES: HeroFeature[] = [
+  { title: "Official Tickets", subtitle: "100% Authorized" },
+  { title: "Skip The Line", subtitle: "Save time, enjoy more" },
+  { title: "Dome Climb Access", subtitle: "Climb Brunelleschi's Dome" },
+  { title: "24/7 Support", subtitle: "We're here to help" },
+];
+
 export const DEFAULT_GALLERY: GalleryImage[] = [
   {
     src: "/images/hero-duomo.jpg",
@@ -303,10 +327,9 @@ export const DEFAULT_GALLERY: GalleryImage[] = [
 
 export const DEFAULT_SECTIONS: HomepageSections = {
   tours: {
-    eyebrow: "Official & Fast-Track Admission",
-    heading: "Duomo Florence Tickets, Brunelleschi Pass & Guided Dome Tours",
-    subheading:
-      "Guarantee your timed reservation for the world-famous Brunelleschi Dome climb. Choose from all-inclusive passes, fast-track priority tickets, and expert-led Renaissance tours.",
+    eyebrow: "Compare & Book Tickets",
+    heading: "Choose Your Perfect Duomo Experience",
+    subheading: "Inclusive passes, fast-track priority tickets, and expert-led Renaissance tours.",
   },
   highlights: {
     eyebrow: "The Heart of the Italian Renaissance",
@@ -337,9 +360,12 @@ export const DEFAULT_SECTIONS: HomepageSections = {
     ],
   },
   why: {
-    heading: "The Complete Duomo Experience: What You Will Discover",
+    eyebrow: "Why Visit The Duomo?",
+    heading: "A Masterpiece of Art, History and Architecture",
     intro:
-      "A transcendent journey through 700 years of Florentine genius. Walk where Dante worshipped, Brunelleschi engineered the impossible, and Michelangelo found his inspiration.",
+      "<p>The Cathedral of Santa Maria del Fiore is the heart of Florence. Climb the Dome designed by Brunelleschi, explore centuries of art and history, and enjoy unforgettable views over the city.</p>",
+    image: "/images/florence-window-view.jpg",
+    imageAlt: "Woman looking through circular stone window at Florence skyline and Duomo",
     timelineHeading: "Recommended Visit Schedule",
     timeline: [
       { time: "0:00", step: "Arrive at Porta dei Canonici (South Side) 15 minutes before your mandatory Dome Climb time slot" },
@@ -351,10 +377,10 @@ export const DEFAULT_SECTIONS: HomepageSections = {
     ],
     learnHeading: "Architectural Secrets You Will Uncover",
     learn: [
-      "How Brunelleschi built the self-supporting dome without any wooden scaffolding or centering",
-      "The ingenious herringbone brickwork pattern (spina di pesce) that prevented the masonry from collapsing inward",
-      "Why Michelangelo declared: 'I go to build her sister in Rome (St. Peter's), larger indeed, but not lovelier'",
-      "How Lorenzo Ghiberti took 27 years to cast the gilded bronze 'Gates of Paradise' for the Baptistery",
+      "Iconic Renaissance architecture",
+      "Brunelleschi's Dome – a historic engineering marvel",
+      "Panoramic views over Florence",
+      "A must-see for every traveler",
     ],
     note: "All passes include digital mobile delivery with instant barcode scanning at all cathedral complex turnstiles.",
     extraHeading: "Key Complex Access Entrances",
@@ -366,6 +392,12 @@ export const DEFAULT_SECTIONS: HomepageSections = {
     ctaText: "Ready to climb Brunelleschi's Dome? Tickets sell out weeks ahead. Reserve your timed entry slot now.",
     ctaButtonText: "Book Duomo Florence Tickets Now →",
     ctaHref: "#tours",
+  },
+  ctaBanner: {
+    heading: "Ready to Climb Brunelleschi's Dome?",
+    subtext: "Book your official Duomo tickets today and make memories that last a lifetime.",
+    buttonText: "Explore Tickets",
+    buttonHref: "#tours",
   },
   tower: {
     eyebrow: "The Ultimate Renaissance Challenge",
@@ -474,18 +506,19 @@ export const DEFAULT_SECTIONS: HomepageSections = {
 };
 
 const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
-  heroBadge: "🏛️ Guaranteed Dome Climb Time Slots · Brunelleschi Pass · 100% Mobile Confirmation",
-  heroHeading: "Duomo Florence Tickets — Fast-Track Entry & Brunelleschi Dome Climb Access",
+  heroBadge: "DUOMO FLORENCE TICKETS | DOME CLIMB ACCESS",
+  heroHeading: "Discover Florence From Its Most Iconic View",
   heroSubheading:
-    "Ascend the 463 steps of Brunelleschi's legendary dome, admire Vasari's Last Judgment frescoes, and explore Giotto's Bell Tower, the Baptistery, and the Opera del Duomo Museum with verified priority tickets.",
-  heroImage: "/images/hero-duomo.jpg",
-  heroImageAlt: "Florence Cathedral Santa Maria del Fiore and Brunelleschi Dome at golden hour",
+    "<p>Official Duomo tickets with Dome Climb access. Skip the line and experience the history, art and breathtaking views of Florence.</p>",
+  heroImage: "/images/florence-hero-panoramic.jpg",
+  heroImageAlt: "Florence Cathedral Brunelleschi Dome and Skyline",
   heroVideo: "",
   heroGallery: DEFAULT_GALLERY,
-  heroCtaPrimaryText: "Book Dome Climb Tickets",
+  heroFeatures: DEFAULT_HERO_FEATURES,
+  heroCtaPrimaryText: "Explore Tickets",
   heroCtaPrimaryHref: "#tours",
-  heroCtaSecondaryText: "Compare Duomo Passes",
-  heroCtaSecondaryHref: "#prices",
+  heroCtaSecondaryText: "Dome Climb Access",
+  heroCtaSecondaryHref: "#tours",
   ratingValue: "4.9 / 5",
   ratingCount: "38,400+ verified visitor reviews",
   showFeaturedTour: true,
@@ -553,6 +586,10 @@ function rowToHomepage(row: any): HomepageContent {
       const g = parseReasons(row.hero_gallery);
       return g.length ? (g as unknown as GalleryImage[]) : DEFAULT_GALLERY;
     })(),
+    heroFeatures: (() => {
+      const f = parseReasons(row.hero_features);
+      return f.length ? (f as unknown as HeroFeature[]) : DEFAULT_HERO_FEATURES;
+    })(),
     heroCtaPrimaryText: row.hero_cta_primary_text || DEFAULT_HOMEPAGE_CONTENT.heroCtaPrimaryText,
     heroCtaPrimaryHref: row.hero_cta_primary_href || DEFAULT_HOMEPAGE_CONTENT.heroCtaPrimaryHref,
     heroCtaSecondaryText: row.hero_cta_secondary_text || DEFAULT_HOMEPAGE_CONTENT.heroCtaSecondaryText,
@@ -568,6 +605,7 @@ function rowToHomepage(row: any): HomepageContent {
       tours: { ...DEFAULT_SECTIONS.tours, ...sectionsRaw.tours },
       highlights: { ...DEFAULT_SECTIONS.highlights, ...sectionsRaw.highlights },
       why: { ...DEFAULT_SECTIONS.why, ...sectionsRaw.why },
+      ctaBanner: { ...DEFAULT_SECTIONS.ctaBanner, ...sectionsRaw.ctaBanner },
       tower: { ...DEFAULT_SECTIONS.tower, ...sectionsRaw.tower },
       practical: { ...DEFAULT_SECTIONS.practical, ...sectionsRaw.practical },
       price: { ...DEFAULT_SECTIONS.price, ...sectionsRaw.price },
@@ -623,6 +661,7 @@ export async function saveHomepageCopy(data: {
   heroImageAlt: string;
   heroVideo: string;
   heroGallery: GalleryImage[];
+  heroFeatures: HeroFeature[];
   heroCtaPrimaryText: string;
   heroCtaPrimaryHref: string;
   heroCtaSecondaryText: string;
@@ -640,13 +679,14 @@ export async function saveHomepageCopy(data: {
   await sql`
     INSERT INTO homepage (
       id, hero_badge, hero_heading, hero_subheading, hero_image, hero_image_alt,
-      hero_video, hero_gallery, hero_cta_primary_text, hero_cta_primary_href,
+      hero_video, hero_gallery, hero_features, hero_cta_primary_text, hero_cta_primary_href,
       hero_cta_secondary_text, hero_cta_secondary_href,
       rating_value, rating_count, meta_title, meta_description, focus_keyword,
       canonical_url, og_title, og_description, og_image
     ) VALUES (
       1, ${data.heroBadge}, ${data.heroHeading}, ${data.heroSubheading}, ${data.heroImage},
       ${data.heroImageAlt}, ${data.heroVideo || ""}, ${JSON.stringify(data.heroGallery || [])}::jsonb,
+      ${JSON.stringify(data.heroFeatures || [])}::jsonb,
       ${data.heroCtaPrimaryText || ""}, ${data.heroCtaPrimaryHref || ""},
       ${data.heroCtaSecondaryText || ""}, ${data.heroCtaSecondaryHref || ""},
       ${data.ratingValue}, ${data.ratingCount},
@@ -661,6 +701,7 @@ export async function saveHomepageCopy(data: {
       hero_image_alt = EXCLUDED.hero_image_alt,
       hero_video = EXCLUDED.hero_video,
       hero_gallery = EXCLUDED.hero_gallery,
+      hero_features = EXCLUDED.hero_features,
       hero_cta_primary_text = EXCLUDED.hero_cta_primary_text,
       hero_cta_primary_href = EXCLUDED.hero_cta_primary_href,
       hero_cta_secondary_text = EXCLUDED.hero_cta_secondary_text,

@@ -18,6 +18,7 @@ import type {
   TimelineRow,
   HoursRow,
   GalleryImage,
+  HeroFeature,
   HighlightCard,
 } from "@/lib/homepage";
 import type { Tour } from "@/lib/data";
@@ -45,6 +46,7 @@ const CONTENT_SECTIONS = [
   { id: "sec-highlights", label: "Highlights" },
   { id: "sec-tourgrid", label: "Tour Grid" },
   { id: "sec-why", label: "What You See" },
+  { id: "sec-ctabanner", label: "Bottom CTA Banner" },
   { id: "sec-tower", label: "Illuminations Cruise" },
   { id: "sec-practical", label: "Practical Info" },
   { id: "sec-price", label: "Price Comparison" },
@@ -188,6 +190,14 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
 
   function updateWhy(patch: Partial<HomepageContent["sections"]["why"]>) {
     setContent((c) => ({ ...c, sections: { ...c.sections, why: { ...c.sections.why, ...patch } } }));
+    setSaved(false);
+  }
+
+  function updateCtaBanner(patch: Partial<HomepageContent["sections"]["ctaBanner"]>) {
+    setContent((c) => ({
+      ...c,
+      sections: { ...c.sections, ctaBanner: { ...c.sections.ctaBanner, ...patch } },
+    }));
     setSaved(false);
   }
 
@@ -403,6 +413,20 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
                 <input value={content.heroCtaSecondaryHref} onChange={(e) => update("heroCtaSecondaryHref", e.target.value)} className={inputClass} />
               </Field>
             </div>
+            <Field label="Feature strip (the floating card of 4 items below the hero text)">
+              <RepeatableList<HeroFeature>
+                items={content.heroFeatures}
+                onChange={(heroFeatures) => update("heroFeatures", heroFeatures)}
+                newItem={() => ({ title: "New Feature", subtitle: "" })}
+                addLabel="+ Add feature"
+                renderItem={(feature, upd) => (
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <input value={feature.title} onChange={(e) => upd({ ...feature, title: e.target.value })} placeholder="Title" className={inputClass} />
+                    <input value={feature.subtitle} onChange={(e) => upd({ ...feature, subtitle: e.target.value })} placeholder="Subtitle" className={inputClass} />
+                  </div>
+                )}
+              />
+            </Field>
           </SectionCard>
 
           <SectionCard
@@ -463,16 +487,31 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
           <SectionCard
             id="sec-why"
             title="“What You See” section"
-            description="The route timeline + what-you'll-notice section below the tour grid."
+            description="The eyebrow, heading, intro paragraph, photo and checklist shown on the live homepage. The timeline/extra-list fields further down aren't currently shown on the page — kept here in case you bring that layout back."
             open={!!openSections["sec-why"]}
             onToggle={() => toggleSection("sec-why")}
           >
+            <Field label="Eyebrow">
+              <input value={content.sections.why.eyebrow} onChange={(e) => updateWhy({ eyebrow: e.target.value })} className={inputClass} />
+            </Field>
             <Field label="Section heading (H2)">
               <input value={content.sections.why.heading} onChange={(e) => updateWhy({ heading: e.target.value })} className={inputClass} />
             </Field>
             <Field label="Intro text">
               <RichTextEditor value={content.sections.why.intro} onChange={(html) => updateWhy({ intro: html })} />
             </Field>
+            <Field label="Checklist bullet points" hint="Rendered as the checkmark list next to the photo.">
+              <RepeatableList<string>
+                items={content.sections.why.learn}
+                onChange={(learn) => updateWhy({ learn })}
+                newItem={() => ""}
+                addLabel="+ Add bullet"
+                renderItem={(item, upd) => (
+                  <input value={item} onChange={(e) => upd(e.target.value)} className={inputClass} />
+                )}
+              />
+            </Field>
+            <p className="text-xs font-semibold uppercase tracking-wide text-stone-400 pt-2">Not currently shown on the live page</p>
             <Field label="Timeline heading">
               <input value={content.sections.why.timelineHeading} onChange={(e) => updateWhy({ timelineHeading: e.target.value })} className={inputClass} />
             </Field>
@@ -490,19 +529,8 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
                 )}
               />
             </Field>
-            <Field label="“What you'll learn” heading">
+            <Field label="“What you'll learn” heading" hint="Unused now that the checklist above has its own bullet list, kept for the timeline layout.">
               <input value={content.sections.why.learnHeading} onChange={(e) => updateWhy({ learnHeading: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="“What you'll learn” bullet points">
-              <RepeatableList<string>
-                items={content.sections.why.learn}
-                onChange={(learn) => updateWhy({ learn })}
-                newItem={() => ""}
-                addLabel="+ Add bullet"
-                renderItem={(item, upd) => (
-                  <input value={item} onChange={(e) => upd(e.target.value)} className={inputClass} />
-                )}
-              />
             </Field>
             <Field label="Small note under the bullets">
               <textarea rows={2} value={content.sections.why.note} onChange={(e) => updateWhy({ note: e.target.value })} className={inputClass} />
@@ -524,15 +552,27 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
                 )}
               />
             </Field>
-            <div className="grid gap-5 sm:grid-cols-3">
-              <Field label="CTA banner text">
-                <input value={content.sections.why.ctaText} onChange={(e) => updateWhy({ ctaText: e.target.value })} className={inputClass} />
+          </SectionCard>
+
+          <SectionCard
+            id="sec-ctabanner"
+            title="Bottom CTA banner"
+            description="The dark call-to-action banner at the very end of the homepage, right before the footer."
+            open={!!openSections["sec-ctabanner"]}
+            onToggle={() => toggleSection("sec-ctabanner")}
+          >
+            <Field label="Heading">
+              <input value={content.sections.ctaBanner.heading} onChange={(e) => updateCtaBanner({ heading: e.target.value })} className={inputClass} />
+            </Field>
+            <Field label="Subtext">
+              <input value={content.sections.ctaBanner.subtext} onChange={(e) => updateCtaBanner({ subtext: e.target.value })} className={inputClass} />
+            </Field>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field label="Button text">
+                <input value={content.sections.ctaBanner.buttonText} onChange={(e) => updateCtaBanner({ buttonText: e.target.value })} className={inputClass} />
               </Field>
-              <Field label="CTA button text">
-                <input value={content.sections.why.ctaButtonText} onChange={(e) => updateWhy({ ctaButtonText: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="CTA button link">
-                <input value={content.sections.why.ctaHref} onChange={(e) => updateWhy({ ctaHref: e.target.value })} className={inputClass} />
+              <Field label="Button link">
+                <input value={content.sections.ctaBanner.buttonHref} onChange={(e) => updateCtaBanner({ buttonHref: e.target.value })} className={inputClass} />
               </Field>
             </div>
           </SectionCard>
@@ -1028,6 +1068,13 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
                 </div>
               )}
             />
+          </SectionCard>
+
+          <SectionCard title="“What You See” photo" description="The photo shown next to the What You See section's checklist.">
+            <ImageUploadField label="Photo" value={content.sections.why.image} onChange={(url) => updateWhy({ image: url })} aspectRatio={4 / 3} />
+            <Field label="Photo alt text">
+              <input value={content.sections.why.imageAlt} onChange={(e) => updateWhy({ imageAlt: e.target.value })} className={inputClass} />
+            </Field>
           </SectionCard>
         </div>
       )}

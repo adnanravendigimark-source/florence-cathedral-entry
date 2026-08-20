@@ -9,7 +9,7 @@ import CtaBanner from "@/components/CtaBanner";
 import Footer from "@/components/Footer";
 import { getTours } from "@/lib/data";
 import { getHomepageContent } from "@/lib/homepage";
-import { resolveRobots, resolveCanonical, resolveOg, stripHtml } from "@/lib/seo";
+import { resolveRobots, resolveCanonical, resolveOg, resolveAbsoluteUrl, stripHtml } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +38,9 @@ export default async function HomePage() {
       "@type": "Product",
       name: t.title,
       description: t.description.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
+      // Google Search Console's Merchant listings check flags Product
+      // structured data missing an "image" as a critical error.
+      image: resolveAbsoluteUrl(t.image),
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: t.rating,

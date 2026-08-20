@@ -280,6 +280,7 @@ async function addSeoColumns() {
 async function addHomepageCmsColumns() {
   console.log("Ensuring homepage CMS columns exist...");
   await sql`ALTER TABLE homepage ADD COLUMN IF NOT EXISTS hero_gallery JSONB NOT NULL DEFAULT '[]'`;
+  await sql`ALTER TABLE homepage ADD COLUMN IF NOT EXISTS hero_features JSONB NOT NULL DEFAULT '[]'`;
   await sql`ALTER TABLE homepage ADD COLUMN IF NOT EXISTS hero_cta_primary_text TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE homepage ADD COLUMN IF NOT EXISTS hero_cta_primary_href TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE homepage ADD COLUMN IF NOT EXISTS hero_cta_secondary_text TEXT NOT NULL DEFAULT ''`;

@@ -1,6 +1,9 @@
-import Link from "next/link";
+import { getHomepageContent } from "@/lib/homepage";
 
-export default function CtaBanner() {
+export default async function CtaBanner() {
+  const { sections } = await getHomepageContent();
+  const s = sections.ctaBanner;
+
   return (
     <section className="py-14 sm:py-16 bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -56,20 +59,20 @@ export default function CtaBanner() {
 
               <div>
                 <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Ready to Climb Brunelleschi&apos;s Dome?
+                  {s.heading}
                 </h2>
                 <p className="mt-1 text-xs text-[#A0AEC0]">
-                  Book your official Duomo tickets today and make memories that last a lifetime.
+                  {s.subtext}
                 </p>
               </div>
             </div>
 
             {/* Right Action Button */}
             <a
-              href="#tours"
+              href={s.buttonHref}
               className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-7 py-3 text-xs font-bold text-[#112338] shadow-md transition-all hover:bg-gray-100 hover:shadow-lg hover:-translate-y-0.5"
             >
-              <span>Explore Tickets</span>
+              <span>{s.buttonText}</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>
