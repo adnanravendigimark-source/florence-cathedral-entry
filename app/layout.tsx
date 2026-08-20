@@ -45,12 +45,12 @@ const touristAttractionJsonLd = {
     latitude: 43.7731,
     longitude: 11.2560,
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "38400",
-    bestRating: "5",
-  },
+  // Google's structured-data validator doesn't support aggregateRating on
+  // TouristAttraction (it's only recognized on types like Product,
+  // LocalBusiness, Recipe, Event, etc.) — it flagged this block as a
+  // critical error. This site also doesn't operate the Duomo itself, so
+  // attaching a third-party review aggregate to it isn't appropriate
+  // structured data anyway. Removed rather than reattached elsewhere.
 };
 
 const organizationJsonLd = {
