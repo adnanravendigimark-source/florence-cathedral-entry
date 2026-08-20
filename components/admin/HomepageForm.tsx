@@ -16,10 +16,8 @@ import type {
   FooterColumn,
   FooterLink,
   TimelineRow,
-  HoursRow,
   GalleryImage,
   HeroFeature,
-  HighlightCard,
 } from "@/lib/homepage";
 import type { Tour } from "@/lib/data";
 
@@ -43,13 +41,9 @@ type TabKey = (typeof TABS)[number]["key"];
 const CONTENT_SECTIONS = [
   { id: "sec-navbar", label: "Navbar" },
   { id: "sec-hero", label: "Hero" },
-  { id: "sec-highlights", label: "Highlights" },
   { id: "sec-tourgrid", label: "Tour Grid" },
   { id: "sec-why", label: "What You See" },
   { id: "sec-ctabanner", label: "Bottom CTA Banner" },
-  { id: "sec-tower", label: "Illuminations Cruise" },
-  { id: "sec-practical", label: "Practical Info" },
-  { id: "sec-price", label: "Price Comparison" },
   { id: "sec-blogteaser", label: "Blog Teaser" },
   { id: "sec-faq", label: "FAQ" },
   { id: "sec-blogpages", label: "Blog Pages" },
@@ -180,14 +174,6 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
     setSaved(false);
   }
 
-  function updateHighlights(patch: Partial<HomepageContent["sections"]["highlights"]>) {
-    setContent((c) => ({
-      ...c,
-      sections: { ...c.sections, highlights: { ...c.sections.highlights, ...patch } },
-    }));
-    setSaved(false);
-  }
-
   function updateWhy(patch: Partial<HomepageContent["sections"]["why"]>) {
     setContent((c) => ({ ...c, sections: { ...c.sections, why: { ...c.sections.why, ...patch } } }));
     setSaved(false);
@@ -198,24 +184,6 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
       ...c,
       sections: { ...c.sections, ctaBanner: { ...c.sections.ctaBanner, ...patch } },
     }));
-    setSaved(false);
-  }
-
-  function updateTower(patch: Partial<HomepageContent["sections"]["tower"]>) {
-    setContent((c) => ({ ...c, sections: { ...c.sections, tower: { ...c.sections.tower, ...patch } } }));
-    setSaved(false);
-  }
-
-  function updatePractical(patch: Partial<HomepageContent["sections"]["practical"]>) {
-    setContent((c) => ({
-      ...c,
-      sections: { ...c.sections, practical: { ...c.sections.practical, ...patch } },
-    }));
-    setSaved(false);
-  }
-
-  function updatePrice(patch: Partial<HomepageContent["sections"]["price"]>) {
-    setContent((c) => ({ ...c, sections: { ...c.sections, price: { ...c.sections.price, ...patch } } }));
     setSaved(false);
   }
 
@@ -430,43 +398,6 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
           </SectionCard>
 
           <SectionCard
-            id="sec-highlights"
-            title="Duomo Highlights section"
-            description="The dark trust/highlights band right below the hero."
-            open={!!openSections["sec-highlights"]}
-            onToggle={() => toggleSection("sec-highlights")}
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Eyebrow">
-                <input value={content.sections.highlights.eyebrow} onChange={(e) => updateHighlights({ eyebrow: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Heading (H2)">
-                <input value={content.sections.highlights.heading} onChange={(e) => updateHighlights({ heading: e.target.value })} className={inputClass} />
-              </Field>
-            </div>
-            <Field label="Subheading">
-              <textarea rows={2} value={content.sections.highlights.subheading} onChange={(e) => updateHighlights({ subheading: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="Highlight cards">
-              <RepeatableList<HighlightCard>
-                items={content.sections.highlights.cards}
-                onChange={(cards) => updateHighlights({ cards })}
-                newItem={() => ({ icon: "✨", title: "New Highlight", body: "" })}
-                addLabel="+ Add card"
-                renderItem={(card, upd) => (
-                  <div className="space-y-2">
-                    <div className="grid gap-2 sm:grid-cols-[4rem_1fr]">
-                      <input value={card.icon} onChange={(e) => upd({ ...card, icon: e.target.value })} placeholder="🏛️" className={inputClass} />
-                      <input value={card.title} onChange={(e) => upd({ ...card, title: e.target.value })} placeholder="Title" className={inputClass} />
-                    </div>
-                    <textarea rows={2} value={card.body} onChange={(e) => upd({ ...card, body: e.target.value })} placeholder="Card body text" className={inputClass} />
-                  </div>
-                )}
-              />
-            </Field>
-          </SectionCard>
-
-          <SectionCard
             id="sec-tourgrid"
             title="Tour Grid section"
             description="The eyebrow + heading + intro text directly above the tour cards."
@@ -574,176 +505,6 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
               <Field label="Button link">
                 <input value={content.sections.ctaBanner.buttonHref} onChange={(e) => updateCtaBanner({ buttonHref: e.target.value })} className={inputClass} />
               </Field>
-            </div>
-          </SectionCard>
-
-          <SectionCard
-            id="sec-tower"
-            title="Illuminations Cruise section"
-            description="Images live on the Images tab."
-            open={!!openSections["sec-tower"]}
-            onToggle={() => toggleSection("sec-tower")}
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Eyebrow label">
-                <input value={content.sections.tower.eyebrow} onChange={(e) => updateTower({ eyebrow: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Heading (H2)">
-                <input value={content.sections.tower.heading} onChange={(e) => updateTower({ heading: e.target.value })} className={inputClass} />
-              </Field>
-            </div>
-            <Field label="Body text">
-              <RichTextEditor value={content.sections.tower.body} onChange={(html) => updateTower({ body: html })} />
-            </Field>
-            <Field label="Bullet points">
-              <RepeatableList<string>
-                items={content.sections.tower.bullets}
-                onChange={(bullets) => updateTower({ bullets })}
-                newItem={() => ""}
-                addLabel="+ Add bullet"
-                renderItem={(item, upd) => (
-                  <input value={item} onChange={(e) => upd(e.target.value)} className={inputClass} />
-                )}
-              />
-            </Field>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Button text">
-                <input value={content.sections.tower.ctaButtonText} onChange={(e) => updateTower({ ctaButtonText: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Button link">
-                <input value={content.sections.tower.ctaHref} onChange={(e) => updateTower({ ctaHref: e.target.value })} className={inputClass} />
-              </Field>
-            </div>
-          </SectionCard>
-
-          <SectionCard
-            id="sec-practical"
-            title="Practical Info section"
-            description="Opening hours, address, and best-time advice."
-            open={!!openSections["sec-practical"]}
-            onToggle={() => toggleSection("sec-practical")}
-          >
-            <Field label="Opening hours heading">
-              <input value={content.sections.practical.hoursHeading} onChange={(e) => updatePractical({ hoursHeading: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="Opening hours">
-              <RepeatableList<HoursRow>
-                items={content.sections.practical.hours}
-                onChange={(hours) => updatePractical({ hours })}
-                newItem={() => ({ range: "", time: "" })}
-                addLabel="+ Add row"
-                renderItem={(row, upd) => (
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <input value={row.range} onChange={(e) => upd({ ...row, range: e.target.value })} placeholder="e.g. April – September" className={inputClass} />
-                    <input value={row.time} onChange={(e) => upd({ ...row, time: e.target.value })} placeholder="e.g. 9:00 AM – 8:00 PM" className={inputClass} />
-                  </div>
-                )}
-              />
-            </Field>
-            <Field label="Small note under the hours table">
-              <input value={content.sections.practical.hoursNote} onChange={(e) => updatePractical({ hoursNote: e.target.value })} className={inputClass} />
-            </Field>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Address heading">
-                <input value={content.sections.practical.addressHeading} onChange={(e) => updatePractical({ addressHeading: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Metro / transit line">
-                <input value={content.sections.practical.metro} onChange={(e) => updatePractical({ metro: e.target.value })} className={inputClass} />
-              </Field>
-            </div>
-            <Field label="Address">
-              <textarea rows={2} value={content.sections.practical.address} onChange={(e) => updatePractical({ address: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="“Best time to visit” heading">
-              <input value={content.sections.practical.bestTimeHeading} onChange={(e) => updatePractical({ bestTimeHeading: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="“Best time to visit” text">
-              <RichTextEditor value={content.sections.practical.bestTimeBody} onChange={(html) => updatePractical({ bestTimeBody: html })} minHeight="5rem" />
-            </Field>
-          </SectionCard>
-
-          <SectionCard
-            id="sec-price"
-            title="Price comparison"
-            description="The table rows pull live from Tours & Tickets — this covers the heading above it and the column headers on the table itself."
-            open={!!openSections["sec-price"]}
-            onToggle={() => toggleSection("sec-price")}
-          >
-            <Field label="Eyebrow">
-              <input value={content.sections.price.eyebrow} onChange={(e) => updatePrice({ eyebrow: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="Heading (H2)">
-              <input value={content.sections.price.heading} onChange={(e) => updatePrice({ heading: e.target.value })} className={inputClass} />
-            </Field>
-            <Field label="Subheading">
-              <RichTextEditor value={content.sections.price.subheading} onChange={(html) => updatePrice({ subheading: html })} minHeight="4rem" />
-            </Field>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Column: item name" hint='e.g. "Cruise Option"'>
-                <input value={content.sections.price.itemLabel} onChange={(e) => updatePrice({ itemLabel: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Column: price" hint='e.g. "Price"'>
-                <input value={content.sections.price.priceLabel} onChange={(e) => updatePrice({ priceLabel: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Column 1" hint={'e.g. "Duration" — set per tour via its "Price table: Duration" field, or leave blank to use the tour\'s own Duration field.'}>
-                <input value={content.sections.price.column1Label} onChange={(e) => updatePrice({ column1Label: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Column 2" hint='e.g. "Tasting / Drinks" — set per tour via its "Price table: Tasting / Drinks" field.'>
-                <input value={content.sections.price.column2Label} onChange={(e) => updatePrice({ column2Label: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Column: best for" hint='e.g. "Best For"'>
-                <input value={content.sections.price.bestForLabel} onChange={(e) => updatePrice({ bestForLabel: e.target.value })} className={inputClass} />
-              </Field>
-              <Field label="Row button label" hint='e.g. "Book"'>
-                <input value={content.sections.price.bookLabel} onChange={(e) => updatePrice({ bookLabel: e.target.value })} className={inputClass} />
-              </Field>
-            </div>
-            <Field label="Small note under the table">
-              <textarea rows={2} value={content.sections.price.note} onChange={(e) => updatePrice({ note: e.target.value })} className={inputClass} />
-            </Field>
-
-            <div>
-              <p className={labelClass}>Live preview</p>
-              <p className="mb-2 text-xs text-stone-500">
-                Exactly what's on the site right now, row by row. Row content (title, price, features)
-                comes from each tour — edit it on the <Link href="/admin/tours" className="underline">Tours &amp; Tickets</Link> page.
-              </p>
-              {tours.length === 0 ? (
-                <p className="rounded-xl border border-stone-200 bg-stone-50 p-4 text-sm text-stone-500">
-                  No tours yet — add one on the Tours &amp; Tickets page to see it appear here.
-                </p>
-              ) : (
-                <div className="overflow-x-auto rounded-xl border border-stone-200">
-                  <table className="w-full min-w-[640px] border-collapse bg-white text-left text-xs">
-                    <thead>
-                      <tr className="bg-stone-100 text-stone-600">
-                        <th className="px-3 py-2 font-semibold">{content.sections.price.itemLabel || "—"}</th>
-                        <th className="px-3 py-2 font-semibold">{content.sections.price.priceLabel || "—"}</th>
-                        <th className="px-3 py-2 font-semibold">{content.sections.price.column1Label || "—"}</th>
-                        <th className="px-3 py-2 font-semibold">{content.sections.price.column2Label || "—"}</th>
-                        <th className="px-3 py-2 font-semibold">{content.sections.price.bestForLabel || "—"}</th>
-                        <th className="px-3 py-2 font-semibold"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tours.map((tour, i) => (
-                        <tr key={tour.id} className={`border-t border-stone-200 ${i % 2 ? "bg-stone-50" : ""}`}>
-                          <td className="px-3 py-2 font-medium text-stone-900">{tour.title}</td>
-                          <td className="px-3 py-2 text-stone-700">€{tour.price}</td>
-                          <td className="px-3 py-2 text-stone-700">{tour.priceTableColumn1 || tour.duration}</td>
-                          <td className="px-3 py-2 text-stone-700">{tour.priceTableFeature || "No"}</td>
-                          <td className="px-3 py-2 text-stone-700">{tour.bestFor}</td>
-                          <td className="px-3 py-2 text-right">
-                            <Link href={`/admin/tours/${tour.id}`} className="font-medium text-canal-blue hover:underline">
-                              Edit →
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
             </div>
           </SectionCard>
 
@@ -1038,24 +799,6 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
             <RepeatableList<GalleryImage>
               items={content.heroGallery}
               onChange={(heroGallery) => update("heroGallery", heroGallery)}
-              newItem={() => ({ src: "", alt: "", label: "" })}
-              addLabel="+ Add photo"
-              renderItem={(img, upd) => (
-                <div className="space-y-2">
-                  <ImageUploadField label="Photo" value={img.src} onChange={(url) => upd({ ...img, src: url })} aspectRatio={1} />
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <input value={img.label} onChange={(e) => upd({ ...img, label: e.target.value })} placeholder="Caption shown on the photo" className={inputClass} />
-                    <input value={img.alt} onChange={(e) => upd({ ...img, alt: e.target.value })} placeholder="Alt text" className={inputClass} />
-                  </div>
-                </div>
-              )}
-            />
-          </SectionCard>
-
-          <SectionCard title="Dome Climb experience photos">
-            <RepeatableList<GalleryImage>
-              items={content.sections.tower.images}
-              onChange={(images) => updateTower({ images })}
               newItem={() => ({ src: "", alt: "", label: "" })}
               addLabel="+ Add photo"
               renderItem={(img, upd) => (

@@ -237,11 +237,9 @@ export const DEFAULT_HEADER: HeaderContent = {
   bookNowText: "Book Tickets",
   navLinks: [
     { label: "Home", href: "/" },
-    { label: "Dome Climb", href: "/#dome-climb" },
-    { label: "Tickets & Passes", href: "/#tours" },
-    { label: "Highlights", href: "/#highlights" },
-    { label: "Plan Visit", href: "/#practical" },
+    { label: "About Us", href: "/about" },
     { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
   ],
   ctaText: "Book Dome Tickets",
   ctaHref: "/#tours",

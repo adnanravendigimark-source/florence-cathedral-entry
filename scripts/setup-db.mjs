@@ -301,6 +301,40 @@ async function addHomepageCmsColumns() {
   console.log("Homepage CMS columns ready.");
 }
 
+// The header nav used to have 6 anchor-link items (Dome Climb, Tickets &
+// Passes, Highlights, Plan Visit) pointing at homepage sections that are no
+// longer part of the page design. The site now uses the same simple 4-link
+// nav as every other site in this family: Home, About Us, Blog, Contact.
+// If a saved header_json still has the old anchor links baked in, heal it
+// back to the new default — but leave everything else about the header
+// (logo, CTA button, etc.) exactly as the admin set it, and never touch a
+// header that's already on the new nav.
+async function healHeaderNavLinks() {
+  const rows = await sql`SELECT header_json FROM homepage WHERE id = 1`;
+  if (!rows.length) return;
+  const raw = rows[0].header_json;
+  const header = typeof raw === "string" ? JSON.parse(raw || "{}") : raw || {};
+  const navLinks = Array.isArray(header.navLinks) ? header.navLinks : [];
+  const hasOldAnchorLinks = navLinks.some(
+    (l) => typeof l?.href === "string" && /#(dome-climb|highlights|practical)/.test(l.href)
+  );
+  if (!hasOldAnchorLinks) {
+    console.log("homepage: header nav links already up to date — skipping.");
+    return;
+  }
+  const healed = {
+    ...header,
+    navLinks: [
+      { label: "Home", href: "/" },
+      { label: "About Us", href: "/about" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contact", href: "/contact" },
+    ],
+  };
+  await sql`UPDATE homepage SET header_json = ${JSON.stringify(healed)}::jsonb WHERE id = 1`;
+  console.log("homepage: healed header nav links to Home / About Us / Blog / Contact.");
+}
+
 async function addBlogCmsColumns() {
   console.log("Ensuring blog CMS columns exist...");
   await sql`ALTER TABLE posts ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ`;
@@ -625,6 +659,7 @@ async function main() {
   await createTables();
   await addSeoColumns();
   await addHomepageCmsColumns();
+  await healHeaderNavLinks();
   await addBlogCmsColumns();
   await addMediaLibraryTable();
   await seedTours();
