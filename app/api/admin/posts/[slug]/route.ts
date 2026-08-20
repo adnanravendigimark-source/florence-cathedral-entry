@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getPosts, getPost, savePosts, type Post } from "@/lib/posts";
+import { getPosts, getPost, savePosts, deletePost, type Post } from "@/lib/posts";
 import { recordSlugRename } from "@/lib/redirects";
 import { getSession } from "@/lib/session";
 import { dbErrorMessage } from "@/lib/db";
@@ -70,13 +70,12 @@ export async function DELETE(_req: Request, { params }: { params: { slug: string
     return NextResponse.json({ error: "Only admins can delete." }, { status: 403 });
   }
 
-  const posts = await getPosts();
-  const next = posts.filter((p) => p.slug !== params.slug);
-  if (next.length === posts.length) {
+  const existing = await getPost(params.slug);
+  if (!existing) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
   try {
-    await savePosts(next);
+    await deletePost(params.slug);
   } catch (err) {
     return NextResponse.json({ error: dbErrorMessage(err) }, { status: 500 });
   }
