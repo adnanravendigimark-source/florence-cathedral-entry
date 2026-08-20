@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "./RichTextEditor";
 import SaveBar from "./SaveBar";
@@ -31,6 +31,14 @@ export default function FaqsForm({ initial }: { initial: FAQ[] }) {
     setFaqs(faqs.filter((_, idx) => idx !== i));
   }
 
+  const dirty = useMemo(() => JSON.stringify(faqs) !== JSON.stringify(initial), [faqs, initial]);
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setFaqs(initial);
+    setError("");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -52,7 +60,7 @@ export default function FaqsForm({ initial }: { initial: FAQ[] }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-4">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       {faqs.map((faq, i) => (
@@ -87,7 +95,7 @@ export default function FaqsForm({ initial }: { initial: FAQ[] }) {
         + Add FAQ
       </button>
 
-      <SaveBar saving={saving} />
+      <SaveBar saving={saving} disabled={!dirty} onCancel={handleCancel} />
     </form>
   );
 }

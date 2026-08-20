@@ -41,6 +41,18 @@ export default function UserForm() {
     setPwError("");
   }
 
+  const dirty = !!email || !!password || role !== "editor" || pages.length > 0;
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard this new user?")) return;
+    setEmail("");
+    setPassword("");
+    setRole("editor");
+    setPages([]);
+    setPwError("");
+    setError("");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -149,13 +161,23 @@ export default function UserForm() {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={saving || !!pwError}
-        className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
-      >
-        {saving ? "Creating…" : "Create User"}
-      </button>
+      <div className="flex items-center gap-3">
+        <button
+          type="submit"
+          disabled={saving || !dirty || !!pwError}
+          className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
+        >
+          {saving ? "Creating…" : "Create User"}
+        </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          disabled={saving}
+          className="rounded-lg border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition hover:bg-stone-100 disabled:opacity-60"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

@@ -40,6 +40,18 @@ export default function AdminPasswordForm() {
     }
   }
 
+  const dirty = !!currentPw || !!newPw || !!confirmPw;
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setCurrentPw("");
+    setNewPw("");
+    setConfirmPw("");
+    setNewPwError("");
+    setConfirmPwError("");
+    setError("");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -76,7 +88,7 @@ export default function AdminPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <div>
@@ -129,7 +141,12 @@ export default function AdminPasswordForm() {
         Tips: mix upper &amp; lowercase letters, numbers, and symbols for a stronger password.
       </p>
 
-      <SaveBar saving={saving} disabled={!!newPwError || !!confirmPwError} label="Update password" />
+      <SaveBar
+        saving={saving}
+        disabled={!dirty || !!newPwError || !!confirmPwError}
+        onCancel={handleCancel}
+        label="Update password"
+      />
     </form>
   );
 }

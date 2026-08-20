@@ -138,6 +138,13 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const dirty = useMemo(() => JSON.stringify(content) !== JSON.stringify(initial), [content, initial]);
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setContent(initial);
+    setError("");
+  }
   // Only the first section starts open — everything else is one click (or
   // one "Jump to section" tap) away, so the tab doesn't read as one long
   // wall of fields.
@@ -280,7 +287,7 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {/* Tab bar */}
       <div className="flex flex-wrap gap-1 rounded-2xl border border-stone-200 bg-white p-1.5">
         {TABS.map((tab) => (
@@ -1102,7 +1109,12 @@ export default function HomepageForm({ initial, tours }: { initial: HomepageCont
         </div>
       )}
 
-      <SaveBar saving={saving} note="Changes save across all tabs at once." />
+      <SaveBar
+        saving={saving}
+        disabled={!dirty}
+        onCancel={handleCancel}
+        note="Changes save across all tabs at once."
+      />
     </form>
   );
 }

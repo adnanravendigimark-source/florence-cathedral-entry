@@ -50,6 +50,26 @@ export default function UserEditForm({ user, onCancel }: { user: SafeUser; onCan
     }
   }
 
+  const dirty =
+    email !== user.email ||
+    role !== user.role ||
+    JSON.stringify([...pages].sort()) !== JSON.stringify([...user.pages].sort()) ||
+    !!password;
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setEmail(user.email);
+    setRole(user.role);
+    setPages(user.pages);
+    setPassword("");
+    setConfirmPassword("");
+    setPwError("");
+    setConfirmError("");
+    setError("");
+    if (onCancel) onCancel();
+    else router.push("/admin/users");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -183,21 +203,16 @@ export default function UserEditForm({ user, onCancel }: { user: SafeUser; onCan
       <div className="flex gap-3 border-t border-stone-200 pt-5">
         <button
           type="submit"
-          disabled={saving || !!pwError || !!confirmError}
+          disabled={saving || !dirty || !!pwError || !!confirmError}
           className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
         >
           {saving ? "Saving…" : "Save Changes"}
         </button>
         <button
           type="button"
-          onClick={() => {
-            if (onCancel) {
-              onCancel();
-              return;
-            }
-            router.push("/admin/users");
-          }}
-          className="rounded-lg border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition hover:bg-stone-100"
+          onClick={handleCancel}
+          disabled={saving}
+          className="rounded-lg border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition hover:bg-stone-100 disabled:opacity-60"
         >
           Cancel
         </button>

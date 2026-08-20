@@ -93,7 +93,7 @@ export default function TourForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -306,7 +306,7 @@ export default function TourForm({
         Featured (shown in homepage rich-result data)
       </label>
 
-      <SaveBar saving={saving} label={isNew ? "Create Tour" : "Save Changes"} onCancel={handleCancel} />
+      <SaveBar saving={saving} disabled={!dirty} label={isNew ? "Create Tour" : "Save Changes"} onCancel={handleCancel} />
     </form>
   );
 }

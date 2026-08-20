@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ImageUploadField from "./ImageUploadField";
 import SeoFieldsCard from "./SeoFieldsCard";
@@ -39,8 +39,16 @@ export default function AboutForm({ initial }: { initial: AboutPageContent }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  const dirty = useMemo(() => JSON.stringify(about) !== JSON.stringify(initial), [about, initial]);
+
   function update<K extends keyof AboutPageContent>(key: K, value: AboutPageContent[K]) {
     setAbout((a) => ({ ...a, [key]: value }));
+  }
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setAbout(initial);
+    setError("");
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -65,7 +73,7 @@ export default function AboutForm({ initial }: { initial: AboutPageContent }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <SectionCard title="Page title" description="The hero banner readers see first.">
@@ -114,7 +122,7 @@ export default function AboutForm({ initial }: { initial: AboutPageContent }) {
         onChange={(patch) => setAbout((a) => ({ ...a, ...patch }))}
       />
 
-      <SaveBar saving={saving} />
+      <SaveBar saving={saving} disabled={!dirty} onCancel={handleCancel} />
     </form>
   );
 }

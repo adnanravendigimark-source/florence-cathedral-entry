@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import IconPicker from "./IconPicker";
 import SeoFieldsCard from "./SeoFieldsCard";
@@ -38,8 +38,16 @@ export default function ContactForm({ initial }: { initial: ContactPageContent }
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  const dirty = useMemo(() => JSON.stringify(contact) !== JSON.stringify(initial), [contact, initial]);
+
   function update<K extends keyof ContactPageContent>(key: K, value: ContactPageContent[K]) {
     setContact((c) => ({ ...c, [key]: value }));
+  }
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setContact(initial);
+    setError("");
   }
 
   function updateReason(i: number, patch: Partial<ContactReason>) {
@@ -78,7 +86,7 @@ export default function ContactForm({ initial }: { initial: ContactPageContent }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <SectionCard title="Hero">
@@ -184,7 +192,7 @@ export default function ContactForm({ initial }: { initial: ContactPageContent }
         onChange={(patch) => setContact((c) => ({ ...c, ...patch }))}
       />
 
-      <SaveBar saving={saving} />
+      <SaveBar saving={saving} disabled={!dirty} onCancel={handleCancel} />
     </form>
   );
 }

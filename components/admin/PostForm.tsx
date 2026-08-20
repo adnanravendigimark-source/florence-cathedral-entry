@@ -194,7 +194,7 @@ export default function PostForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="pb-24">
+    <form onSubmit={handleSubmit}>
       <div className="mx-auto max-w-4xl space-y-5">
         {/* Tab bar — sticky so it (and the "View Post" shortcut) stay
             reachable while scrolling a long article instead of only
@@ -498,12 +498,15 @@ export default function PostForm({
         )}
       </div>
 
-      <SaveBar
-        saving={saving}
-        label={isNew ? "Publish Post" : "Save Changes"}
-        onCancel={handleCancel}
-        note={dirty ? "Unsaved changes" : "All changes saved"}
-      />
+      <div className="mx-auto max-w-4xl">
+        <SaveBar
+          saving={saving}
+          disabled={!dirty}
+          label={isNew ? "Publish Post" : "Save Changes"}
+          onCancel={handleCancel}
+          note={dirty ? "Unsaved changes" : "All changes saved"}
+        />
+      </div>
     </form>
   );
 }

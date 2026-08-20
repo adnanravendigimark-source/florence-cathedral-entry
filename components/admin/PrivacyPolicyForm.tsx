@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import SeoFieldsCard from "./SeoFieldsCard";
 import RichTextEditor from "./RichTextEditor";
@@ -49,6 +49,14 @@ export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy 
     update("content", next);
   }
 
+  const dirty = useMemo(() => JSON.stringify(policy) !== JSON.stringify(initial), [policy, initial]);
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setPolicy(initial);
+    setError("");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -71,7 +79,7 @@ export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <div className="rounded-2xl border border-stone-200 bg-white p-6 space-y-4">
@@ -184,7 +192,7 @@ export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy 
         onChange={(patch) => setPolicy((p) => ({ ...p, ...patch }))}
       />
 
-      <SaveBar saving={saving} />
+      <SaveBar saving={saving} disabled={!dirty} onCancel={handleCancel} />
     </form>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import SaveBar from "./SaveBar";
 import { useToast } from "./Toast";
@@ -27,8 +27,16 @@ export default function RecommendedTourForm({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  const dirty = useMemo(() => JSON.stringify(content) !== JSON.stringify(initial), [content, initial]);
+
   function update<K extends keyof HomepageContent>(key: K, value: HomepageContent[K]) {
     setContent((c) => ({ ...c, [key]: value }));
+  }
+
+  function handleCancel() {
+    if (dirty && !window.confirm("Discard unsaved changes?")) return;
+    setContent(initial);
+    setError("");
   }
 
   function updateReason(i: number, value: string) {
@@ -69,7 +77,7 @@ export default function RecommendedTourForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <label className="flex items-center gap-2 text-sm font-semibold text-stone-900">
@@ -147,7 +155,7 @@ export default function RecommendedTourForm({
         </button>
       </div>
 
-      <SaveBar saving={saving} />
+      <SaveBar saving={saving} disabled={!dirty} onCancel={handleCancel} />
     </form>
   );
 }
