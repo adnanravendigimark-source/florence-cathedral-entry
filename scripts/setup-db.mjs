@@ -424,7 +424,7 @@ async function seedPosts() {
         recommended_tour_id, recommended_tour_after_block, content, sort_order
       ) VALUES (
         ${p.slug}, ${p.title}, ${p.metaTitle || p.title}, ${p.metaDescription || p.excerpt || ""},
-        ${p.category || "Colosseum Guides"}, ${p.excerpt || ""}, ${p.quickAnswer || ""},
+        ${p.category || "Duomo Guides"}, ${p.excerpt || ""}, ${p.quickAnswer || ""},
         ${p.readTime || "5 min read"}, ${date}, ${p.image || p.coverImage || ""},
         ${p.imageAlt || p.coverImageAlt || ""},
         ${p.recommendedTourId || ""}, ${p.recommendedTourAfterBlock ?? null},
@@ -524,14 +524,30 @@ async function seedPrivacyPolicy() {
 }
 
 async function seedSiteSettings() {
-  const [{ count }] = await sql`SELECT COUNT(*)::int AS count FROM site_settings`;
-  if (count > 0) {
+  const rows = await sql`SELECT blog_meta_title FROM site_settings WHERE id = 1`;
+  const blogTitle = "Duomo Florence Blog | Dome Climb, Passes, Prices & Tips (2026)";
+  const blogDescription =
+    "Comprehensive travel and visitor guides for Duomo Florence tickets — Brunelleschi Dome Climb access, Giotto Tower passes, booking strategies, and pricing.";
+
+  const existing = rows[0];
+  // This seed previously left leftover Colosseum/Rome blog SEO copy behind
+  // (same class of bug as seedContactPage/seedAboutPage above). Heal that
+  // specific, provably-wrong case; never touch a row with different, real
+  // admin-set copy.
+  const looksLikeWrongBrand =
+    existing && typeof existing.blog_meta_title === "string" && existing.blog_meta_title.includes("Colosseum");
+
+  if (existing && !looksLikeWrongBrand) {
     console.log("site_settings: already configured — skipping seed.");
     return;
   }
-  const blogTitle = "Colosseum Rome Tickets, Guides, Prices & Tips (2026)";
-  const blogDescription =
-    "Comprehensive travel and visitor guides for Colosseum tickets in Rome — Arena Floor direct access, Skip the Line strategies, Underground Hypogeum tours, and pricing.";
+
+  if (existing) {
+    await sql`UPDATE site_settings SET blog_meta_title = ${blogTitle}, blog_meta_description = ${blogDescription} WHERE id = 1`;
+    console.log("site_settings: healed mismatched Colosseum blog SEO copy with Florence copy.");
+    return;
+  }
+
   await sql`
     INSERT INTO site_settings (id, blog_meta_title, blog_meta_description)
     VALUES (1, ${blogTitle}, ${blogDescription})
@@ -614,32 +630,65 @@ async function seedAboutPage() {
 }
 
 async function seedContactPage() {
-  const [{ count }] = await sql`SELECT COUNT(*)::int AS count FROM contact_page`;
-  if (count > 0) {
-    console.log("contact_page: already configured — skipping seed.");
-    return;
-  }
+  const rows = await sql`SELECT hero_heading FROM contact_page WHERE id = 1`;
+  // Matches DEFAULT_CONTACT in lib/contact.ts (already correctly Florence-
+  // branded — this seed previously still had leftover Colosseum Arena
+  // Entry copy, including a support@colosseumarenaentry.com email address,
+  // which is what a fresh install — or a row still carrying that copy —
+  // would show live. Heal that specific, provably-wrong case automatically;
+  // never touch a row that already has different, real admin content.
   const reasons = [
-    { icon: "HeadsetIcon", title: "Ticket Selection & Advice", body: "Need help deciding between Arena Floor access, priority fast-track entry, or a full historian guided tour? Ask our Rome specialists." },
+    { icon: "HeadsetIcon", title: "Pass Selection & Dome Advice", body: "Need help choosing between the Brunelleschi Pass, Giotto Pass, or a licensed art historian guided climb? Ask our Florence specialists." },
     { icon: "BriefcaseIcon", title: "Partnerships & Operators", body: "Licensed Italian tour operators, tourism authorities, and travel publishers — reach out regarding listings and collaborations." },
-    { icon: "MailIcon", title: "General Inquiries", body: "Feedback, visitor tips, accessibility questions, or editorial suggestions for our Colosseum guides." },
+    { icon: "MailIcon", title: "General Inquiries", body: "Feedback, visitor tips, accessibility questions, or editorial suggestions for our Florence Cathedral guides." },
   ];
   const c = {
     heroEyebrow: "Contact Us",
-    heroHeading: "Get in Touch with Our Rome Travel Team",
+    heroHeading: "Get in Touch with Our Florence Travel Team",
     heroSubheading:
-      "Questions about booking Colosseum tickets, Arena Floor passes, Underground tours, or partnership inquiries? Reach out to our team directly.",
-    email: "support@colosseumarenaentry.com",
+      "Questions about booking Duomo Florence tickets, Brunelleschi Dome Climb time slots, Giotto Tower passes, or partnership inquiries? Reach out to our team directly.",
+    email: "support@florenceduomotickets.com",
     emailNote: "We typically respond within 1–2 business days.",
     reasonsHeading: "How We Can Help",
     footerNote:
       "Already booked? Please refer to your confirmation voucher to contact your tour provider directly for real-time meeting point directions or schedule changes.",
-    ctaHeading: "Ready to reserve your Colosseum tickets?",
-    ctaButtonLabel: "Compare Colosseum Tickets & Guided Tours",
-    metaTitle: "Contact Us | Colosseum Arena Entry Rome",
+    ctaHeading: "Ready to reserve your Duomo Florence tickets?",
+    ctaButtonLabel: "Compare Duomo Passes & Dome Climb Tours",
+    metaTitle: "Contact Us | Duomo Florence Tickets & Dome Climb",
     metaDescription:
-      "Questions about Colosseum tickets, Arena Floor passes, or visiting Rome? Contact the Colosseum Arena Entry team.",
+      "Questions about Duomo Florence tickets, Brunelleschi Dome climb passes, or visiting Florence Cathedral? Contact the Duomo Florence Tickets team.",
   };
+
+  const existing = rows[0];
+  const looksLikeWrongBrand =
+    existing && typeof existing.hero_heading === "string" && existing.hero_heading.includes("Rome");
+
+  if (existing && !looksLikeWrongBrand) {
+    console.log("contact_page: already configured — skipping seed.");
+    return;
+  }
+
+  if (existing) {
+    await sql`
+      UPDATE contact_page SET
+        hero_eyebrow = ${c.heroEyebrow},
+        hero_heading = ${c.heroHeading},
+        hero_subheading = ${c.heroSubheading},
+        email = ${c.email},
+        email_note = ${c.emailNote},
+        reasons_heading = ${c.reasonsHeading},
+        reasons = ${JSON.stringify(reasons)}::jsonb,
+        footer_note = ${c.footerNote},
+        cta_heading = ${c.ctaHeading},
+        cta_button_label = ${c.ctaButtonLabel},
+        meta_title = ${c.metaTitle},
+        meta_description = ${c.metaDescription}
+      WHERE id = 1
+    `;
+    console.log("contact_page: healed mismatched Colosseum/Rome copy with Florence Contact page copy.");
+    return;
+  }
+
   await sql`
     INSERT INTO contact_page (
       id, hero_eyebrow, hero_heading, hero_subheading, email, email_note,
@@ -670,7 +719,7 @@ async function main() {
   await seedSiteSettings();
   await seedAboutPage();
   await seedContactPage();
-  console.log("\nDone. Colosseum Arena Tickets database is ready.");
+  console.log("\nDone. Duomo Florence Tickets database is ready.");
 }
 
 main()
