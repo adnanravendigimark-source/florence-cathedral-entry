@@ -1,0 +1,201 @@
+[
+  {
+    "id": "brunelleschi-pass-all-inclusive-dome-climb",
+    "title": "Brunelleschi Pass — All-Inclusive Duomo & Guaranteed Dome Climb Access",
+    "description": "The definitive Florence Duomo experience. Includes guaranteed timed entry to climb the 463 steps of Brunelleschi's Dome, plus 3-day access to Giotto's Bell Tower, the Baptistery of San Giovanni, the Museo dell'Opera del Duomo, and the Crypt of Santa Reparata.",
+    "price": 42.0,
+    "duration": "3 Days Validity (Dome Climb ~1.5 Hours)",
+    "rating": 4.9,
+    "reviews": 24800,
+    "featured": true,
+    "badge": "Bestseller · Must Reserve Early",
+    "image": "/images/dome-climb.jpg",
+    "imageAlt": "Climbing the 463 steps of Brunelleschi's Dome in Florence",
+    "href": "https://www.getyourguide.com/florence-l32/brunelleschi-pass-duomo-tickets-t512345/?partner_id=DUOMOFLORENCE",
+    "category": "Duomo Passes",
+    "highlights": [
+      "Guaranteed timed reservation to climb Brunelleschi's Dome (463 steps)",
+      "Full access to Giotto's Bell Tower (414 steps)",
+      "Admission to the Baptistery of San Giovanni & Gates of Paradise",
+      "Entry to the world-renowned Museo dell'Opera del Duomo",
+      "Exploration of the ancient Crypt of Santa Reparata",
+      "Pass valid for 72 consecutive hours from first monument entry"
+    ],
+    "includes": [
+      "Official Brunelleschi Pass barcode ticket",
+      "Mandatory timed entry reservation for Brunelleschi's Dome",
+      "Access to Giotto's Campanile bell tower",
+      "Access to San Giovanni Baptistery & Opera del Duomo Museum",
+      "Access to Crypt of Santa Reparata",
+      "Digital Florence audio guide app (multilingual)"
+    ],
+    "excludes": [
+      "Live human tour guide (Audio guide included)",
+      "Hotel pickup and drop-off",
+      "Food and drinks"
+    ]
+  },
+  {
+    "id": "florence-duomo-priority-dome-climb-guided-tour",
+    "title": "Florence Duomo & Brunelleschi Dome Climb VIP Guided Tour",
+    "description": "Ascend the iconic dome with an expert licensed art historian. Skip long lines, discover hidden Renaissance architectural engineering, get up close to Vasari's Last Judgment frescoes, and take in panoramic 360° views from the rooftop lantern terrace.",
+    "price": 68.0,
+    "duration": "2.5 Hours Guided",
+    "rating": 4.95,
+    "reviews": 11200,
+    "featured": true,
+    "badge": "Top Rated VIP Tour",
+    "image": "/images/dome-frescoes.jpg",
+    "imageAlt": "Vasari's Last Judgment frescoes inside Florence Duomo cupola ceiling",
+    "href": "https://www.getyourguide.com/florence-l32/duomo-dome-climb-guided-tour-t512346/?partner_id=DUOMOFLORENCE",
+    "category": "Guided Tours",
+    "highlights": [
+      "Priority skip-the-line entrance to Santa Maria del Fiore & the Dome",
+      "Expert commentary on Brunelleschi's revolutionary engineering feat",
+      "Exclusive access to the internal fresco viewing gallery",
+      "360° panoramic Florence city vistas from the open-air lantern",
+      "Headsets provided so you always hear your guide clearly",
+      "Includes 72h pass to Giotto's Tower, Baptistery & Duomo Museum"
+    ],
+    "includes": [
+      "Licensed English-speaking guide (Art Historian)",
+      "Skip-the-line fast track entry ticket for the Dome",
+      "Full 3-day Florence Cathedral Complex pass (Giotto Tower, Museum, Baptistery)",
+      "Personal audio headsets",
+      "Small group setting (maximum 15 travelers)"
+    ],
+    "excludes": [
+      "Gratuities",
+      "Hotel transfers"
+    ]
+  },
+  {
+    "id": "giotto-pass-florence-cathedral-complex",
+    "title": "Giotto Pass — Giotto's Bell Tower, Baptistery, Museum & Crypt",
+    "description": "Perfect for travelers looking to enjoy stunning Florence views without climbing the Dome. Climb the 414 steps of Giotto's free-standing Bell Tower for the premier frontal view of Brunelleschi's Dome, and visit the Baptistery, Duomo Museum, and Crypt.",
+    "price": 28.0,
+    "duration": "3 Days Validity (Bell Tower ~1 Hour)",
+    "rating": 4.85,
+    "reviews": 8900,
+    "featured": false,
+    "badge": "Great Alternative",
+    "image": "/images/giotto-campanile.jpg",
+    "imageAlt": "Giotto's Bell Tower Campanile in Piazza del Duomo Florence",
+    "href": "https://www.getyourguide.com/florence-l32/giotto-pass-florence-cathedral-t512347/?partner_id=DUOMOFLORENCE",
+    "category": "Duomo Passes",
+    "highlights": [
+      "Climb 414 steps of Giotto's Campanile for the best panoramic view of the Dome",
+      "Direct entry to the octagonal Baptistery of San Giovanni",
+      "Admire Michelangelo's Florence Pietà inside the Opera del Duomo Museum",
+      "Discover the archaeological Crypt of Santa Reparata",
+      "Flexible schedule across 3 consecutive calendar days"
+    ],
+    "includes": [
+      "Official Giotto Pass barcode voucher",
+      "Entry to Giotto's Bell Tower (no strict time slot needed)",
+      "San Giovanni Baptistery entry",
+      "Museo dell'Opera del Duomo entry",
+      "Crypt of Santa Reparata entry"
+    ],
+    "excludes": [
+      "Brunelleschi Dome climb (requires Brunelleschi Pass)",
+      "Live tour guide"
+    ]
+  },
+  {
+    "id": "florence-cathedral-duomo-express-guided-tour",
+    "title": "Florence Cathedral Interior & Santa Reparata Crypt Guided Tour",
+    "description": "Skip the notorious 2-hour queue outside the Cathedral. Enter directly through the dedicated group entrance and explore the majestic nave, Paolo Uccello's 24-hour clock, stained glass windows, and the subterranean archaeological crypt with an expert.",
+    "price": 35.0,
+    "duration": "1.5 Hours",
+    "rating": 4.8,
+    "reviews": 6400,
+    "featured": false,
+    "badge": "Skip Long Queues",
+    "image": "/images/crypt-santa-reparata.jpg",
+    "imageAlt": "Ancient Crypt of Santa Reparata ruins beneath Florence Cathedral",
+    "href": "https://www.getyourguide.com/florence-l32/florence-cathedral-crypt-tour-t512348/?partner_id=DUOMOFLORENCE",
+    "category": "Guided Tours",
+    "highlights": [
+      "Dedicated skip-the-line entrance bypassing the free public cathedral queue",
+      "Guided exploration of Santa Maria del Fiore's vast Gothic interior",
+      "In-depth visit to the ancient Crypt of Santa Reparata and Roman ruins",
+      "Discover Brunelleschi's hidden tomb inside the crypt",
+      "Expert licensed local guide"
+    ],
+    "includes": [
+      "Priority cathedral skip-the-line admission",
+      "Crypt of Santa Reparata admission ticket",
+      "Licensed guide and audio headsets"
+    ],
+    "excludes": [
+      "Brunelleschi Dome climb access",
+      "Giotto's Bell Tower climb"
+    ]
+  },
+  {
+    "id": "ghiberti-pass-baptistery-museum-crypt",
+    "title": "Ghiberti Pass — Baptistery, Opera del Duomo Museum & Crypt",
+    "description": "An ideal budget-friendly cultural pass for visitors who prefer not to climb stairs. Discover the gilded Gates of Paradise, the breathtaking 3-story sculpture court in the Duomo Museum, and early Christian ruins in Santa Reparata.",
+    "price": 18.0,
+    "duration": "3 Days Validity",
+    "rating": 4.75,
+    "reviews": 4200,
+    "featured": false,
+    "badge": "No Climbing Required",
+    "image": "/images/baptistery.jpg",
+    "imageAlt": "Baptistery of San Giovanni and Gates of Paradise in Florence",
+    "href": "https://www.getyourguide.com/florence-l32/ghiberti-pass-florence-t512349/?partner_id=DUOMOFLORENCE",
+    "category": "Duomo Passes",
+    "highlights": [
+      "Octagonal Baptistery of San Giovanni & gilded Byzantine mosaics",
+      "Museo dell'Opera del Duomo containing 750+ original masterworks",
+      "See Donatello's Penitent Magdalene & Michelangelo's Bandini Pietà",
+      "Crypt of Santa Reparata under the cathedral floor",
+      "Valid for 72 hours from first scan"
+    ],
+    "includes": [
+      "Official Ghiberti Pass digital voucher",
+      "Baptistery of San Giovanni entry",
+      "Opera del Duomo Museum entry",
+      "Crypt of Santa Reparata entry"
+    ],
+    "excludes": [
+      "Brunelleschi Dome Climb",
+      "Giotto's Bell Tower Climb",
+      "Cathedral nave access"
+    ]
+  },
+  {
+    "id": "florence-duomo-accademia-uffizi-super-combo",
+    "title": "Florence Super Combo: Duomo Dome Climb + Accademia (David) + Uffizi",
+    "description": "Experience Florence's 3 crowning attractions in one seamless package. Includes Brunelleschi Dome Climb with timed entry, skip-the-line tickets for Michelangelo's David at the Accademia, and priority admission to the Uffizi Gallery.",
+    "price": 115.0,
+    "duration": "Full Day or Flexible Multi-Day",
+    "rating": 4.95,
+    "reviews": 15600,
+    "featured": true,
+    "badge": "Best Value Combo",
+    "image": "/images/opera-duomo-museum.jpg",
+    "imageAlt": "Renaissance art sculptures in Florence museum",
+    "href": "https://www.getyourguide.com/florence-l32/florence-super-combo-duomo-uffizi-accademia-t512350/?partner_id=DUOMOFLORENCE",
+    "category": "Combo Passes",
+    "highlights": [
+      "Brunelleschi Pass: Dome Climb + Tower + Baptistery + Museum + Crypt",
+      "Priority timed entry ticket to the Accademia Gallery (Michelangelo's David)",
+      "Priority timed entry ticket to the Uffizi Gallery (Botticelli's Birth of Venus)",
+      "Save up to 25% compared to purchasing separate individual tickets",
+      "Digital mobile vouchers for all 3 attractions with free cancellation"
+    ],
+    "includes": [
+      "Full Brunelleschi Pass (72-hour validity)",
+      "Accademia Gallery skip-the-line ticket",
+      "Uffizi Gallery skip-the-line ticket",
+      "Florence digital city audio guide"
+    ],
+    "excludes": [
+      "Guided tours inside museums (Audio guides available)",
+      "Transportation between venues"
+    ]
+  }
+]

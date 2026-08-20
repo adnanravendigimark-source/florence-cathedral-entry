@@ -1,0 +1,62 @@
+[
+  {
+    "id": "faq-1",
+    "question": "Which ticket includes access to climb Brunelleschi's Dome?",
+    "answer": "Only the <strong>Brunelleschi Pass</strong> (or dedicated guided Dome tours) includes access to climb the 463 steps of Brunelleschi's Dome. The <em>Giotto Pass</em> includes the Bell Tower, Baptistery, Museum, and Crypt, but does NOT include the Dome. The <em>Ghiberti Pass</em> covers the ground monuments only. To climb the Dome, you must select a Brunelleschi Pass or a guided Dome tour with a mandatory timed reservation.",
+    "category": "Tickets & Passes"
+  },
+  {
+    "id": "faq-2",
+    "question": "How many steps is the Dome climb, and is there an elevator?",
+    "answer": "There are <strong>463 stone steps</strong> to climb Brunelleschi's Dome, and there is <strong>no elevator</strong>. The ascent winds through original 15th-century narrow corridors, tight spiral staircases, and catwalks suspended directly below the massive Last Judgment ceiling frescoes. The climb is physically demanding and is not recommended for visitors with severe claustrophobia, vertigo, heart conditions, or mobility limitations.",
+    "category": "Dome Climb Access"
+  },
+  {
+    "id": "faq-3",
+    "question": "Why do I need to book my Dome Climb time slot in advance?",
+    "answer": "Due to safety regulations and the narrow physical constraints of the double dome shell, only a strictly limited number of visitors are permitted to ascend every 45 minutes. During peak tourist seasons (March through November), <strong>Dome Climb time slots sell out 2 to 4 weeks in advance</strong>. Booking your pass online beforehand guarantees your entry and avoids disappointment.",
+    "category": "Booking & Reservations"
+  },
+  {
+    "id": "faq-4",
+    "question": "What is the dress code for visiting Florence Cathedral and climbing the Dome?",
+    "answer": "Florence Cathedral is an active consecrated Catholic church with a strict dress code. <strong>Shoulders and knees must be fully covered</strong> for both men and women. Sleeveless shirts, tank tops, short skirts, and short shorts are strictly prohibited. Hats and sunglasses must be removed inside the cathedral. If you are climbing the dome in summer, bring a light scarf or shawl to drape over your shoulders.",
+    "category": "Visitor Rules"
+  },
+  {
+    "id": "faq-5",
+    "question": "What is the difference between climbing Brunelleschi's Dome and Giotto's Bell Tower?",
+    "answer": "Both climbs offer spectacular views, but the experiences are distinct:<ul><li><strong>Brunelleschi's Dome (463 steps):</strong> You climb inside the historic double masonry shell, walk along the interior balcony inches from Vasari's Last Judgment frescoes, and emerge at the highest open-air lantern in Florence with 360° views.</li><li><strong>Giotto's Bell Tower (414 steps):</strong> A square tower climb with resting floors every 100 steps, offering the world's best close-up frontal photo perspective of Brunelleschi's Dome itself.</li></ul>The Brunelleschi Pass includes access to both!",
+    "category": "Comparisons"
+  },
+  {
+    "id": "faq-6",
+    "question": "How long is my Florence Duomo Pass valid for?",
+    "answer": "All official Duomo passes (Brunelleschi Pass, Giotto Pass, and Ghiberti Pass) are <strong>valid for 3 consecutive calendar days (72 hours)</strong> starting from the moment you scan your barcode at your first monument. While your Dome Climb must take place at your exact reserved time slot, all other monuments (Bell Tower, Museum, Baptistery, Crypt) can be visited at your leisure anytime during the 3-day validity window.",
+    "category": "Tickets & Passes"
+  },
+  {
+    "id": "faq-7",
+    "question": "Where is the entrance for the Brunelleschi Dome Climb?",
+    "answer": "The entrance for the Dome climb is at the <strong>Porta dei Canonici</strong> (the Canons' Door), situated on the <strong>south side of the Cathedral</strong> facing Via del Proconsolo. Look for the sign labeled 'Cupola / Dome'. You should arrive 10–15 minutes prior to your allocated time slot with your digital mobile ticket ready.",
+    "category": "Visiting & Location"
+  },
+  {
+    "id": "faq-8",
+    "question": "Can I enter the Florence Cathedral for free?",
+    "answer": "Yes, admission to the main Cathedral nave floor (Santa Maria del Fiore) is technically free. However, the free public queue in Piazza del Duomo routinely takes <strong>1.5 to 2.5 hours</strong> in the heat. Furthermore, free entry only allows you to view the empty main nave—it does NOT include the Dome climb, Giotto's Bell Tower, the Baptistery, the Duomo Museum, or the Crypt. Booking a pass or guided tour saves hours and grants access to the complex's real treasures.",
+    "category": "Visitor Information"
+  },
+  {
+    "id": "faq-9",
+    "question": "Are large backpacks, luggage, or tripods allowed inside?",
+    "answer": "No. Large backpacks, bulky bags, suitcases, tripods, umbrellas with pointed tips, and sharp objects are strictly prohibited inside the Dome and Cathedral complex. The Opera del Duomo provides a <strong>free luggage storage facility at Piazza del Duomo 38/r</strong> (near the museum entrance), where ticket holders must check bags prior to their climb.",
+    "category": "Visitor Rules"
+  },
+  {
+    "id": "faq-10",
+    "question": "What is the cancellation policy for tickets?",
+    "answer": "All passes and tours booked through our authorized partners feature a <strong>100% full refund guarantee</strong> when cancelled up to 24 hours before your scheduled entry time. This gives you complete peace of mind if your travel plans change.",
+    "category": "Booking & Reservations"
+  }
+]
