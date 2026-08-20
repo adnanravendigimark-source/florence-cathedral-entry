@@ -350,7 +350,7 @@ async function seedTours() {
         ${t.id}, ${t.badge}, ${t.ribbon || null}, ${t.title}, ${t.description},
         ${JSON.stringify(t.includes || [])}::jsonb, ${t.duration || null},
         ${t.rating ?? 5}, ${t.reviews ?? 0}, ${t.price ?? 0}, ${t.originalPrice ?? null},
-        ${t.image}, ${t.imageAlt}, ${t.hrefPath}, ${t.hrefExtra || null},
+        ${t.image}, ${t.imageAlt}, ${t.hrefPath || t.href}, ${t.hrefExtra || null},
         ${!!t.featured}, ${t.bestFor || ""}, ${i}
       )
       ON CONFLICT (id) DO NOTHING
