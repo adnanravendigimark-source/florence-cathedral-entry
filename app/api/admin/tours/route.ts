@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getToursRaw, saveTours, type TourRecord } from "@/lib/data";
+import { getToursRaw, insertTour, type TourRecord } from "@/lib/data";
 import { DB_ERROR_MESSAGE } from "@/lib/db";
 
 // Force this route to always run as a live serverless function rather than
@@ -25,9 +25,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "A tour with this ID already exists." }, { status: 400 });
   }
 
-  tours.push(body);
   try {
-    await saveTours(tours);
+    await insertTour(body);
   } catch {
     return NextResponse.json({ error: DB_ERROR_MESSAGE }, { status: 500 });
   }

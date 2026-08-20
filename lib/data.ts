@@ -91,6 +91,62 @@ export async function getToursRaw(): Promise<TourRecord[]> {
   }
 }
 
+// Single-row insert for creating exactly one new tour — appended at the end
+// of the current sort order. Used by POST /api/admin/tours instead of the
+// old pattern (push onto the full array, then run saveTours() below, which
+// re-upserts every existing tour just to add one) — that meant creating a
+// single tour did N unnecessary writes and N extra chances for a Neon
+// serverless request to time out, exactly like the posts-delete bug.
+export async function insertTour(t: TourRecord): Promise<void> {
+  const [{ count }] = await sql`SELECT count(*)::int AS count FROM tours`;
+  await sql`
+    INSERT INTO tours (
+      id, badge, ribbon, title, description, includes, duration, rating,
+      reviews, price, original_price, image, image_alt, href_path,
+      href_extra, featured, best_for, price_table_column1, price_table_feature, sort_order
+    ) VALUES (
+      ${t.id}, ${t.badge || "self-guided"}, ${t.ribbon || null}, ${t.title}, ${t.description},
+      ${JSON.stringify(t.includes || [])}::jsonb, ${t.duration || null}, ${t.rating},
+      ${t.reviews}, ${t.price}, ${t.originalPrice ?? null}, ${t.image}, ${t.imageAlt},
+      ${t.hrefPath || t.href || ""}, ${t.hrefExtra || null}, ${!!t.featured}, ${t.bestFor || ""}, ${t.priceTableColumn1 || ""}, ${t.priceTableFeature || ""}, ${count as number}
+    )
+  `;
+}
+
+// Single-row update for editing exactly one existing tour — leaves every
+// other row (and this row's own sort_order) untouched. Used by
+// PUT /api/admin/tours/[id] instead of resaving the entire tours list.
+export async function updateTourRecord(id: string, t: TourRecord): Promise<void> {
+  await sql`
+    UPDATE tours SET
+      badge = ${t.badge || "self-guided"},
+      ribbon = ${t.ribbon || null},
+      title = ${t.title},
+      description = ${t.description},
+      includes = ${JSON.stringify(t.includes || [])}::jsonb,
+      duration = ${t.duration || null},
+      rating = ${t.rating},
+      reviews = ${t.reviews},
+      price = ${t.price},
+      original_price = ${t.originalPrice ?? null},
+      image = ${t.image},
+      image_alt = ${t.imageAlt},
+      href_path = ${t.hrefPath || t.href || ""},
+      href_extra = ${t.hrefExtra || null},
+      featured = ${!!t.featured},
+      best_for = ${t.bestFor || ""},
+      price_table_column1 = ${t.priceTableColumn1 || ""},
+      price_table_feature = ${t.priceTableFeature || ""}
+    WHERE id = ${id}
+  `;
+}
+
+// Single-row delete — used by DELETE /api/admin/tours/[id] instead of
+// resaving every remaining tour just to remove one.
+export async function deleteTour(id: string): Promise<void> {
+  await sql`DELETE FROM tours WHERE id = ${id}`;
+}
+
 export async function saveTours(records: TourRecord[]): Promise<void> {
   for (let i = 0; i < records.length; i++) {
     const t = records[i];

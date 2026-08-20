@@ -343,6 +343,13 @@ async function addBlogCmsColumns() {
   await sql`ALTER TABLE posts ADD COLUMN IF NOT EXISTS cta_body TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE posts ADD COLUMN IF NOT EXISTS cta_button_text TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE posts ADD COLUMN IF NOT EXISTS cta_button_href TEXT NOT NULL DEFAULT ''`;
+  // The "Author" field on the post editor (lib/posts.ts's `author` column)
+  // was never actually created by this script, even though rowToPost()
+  // reads it and PostForm.tsx lets admins edit it — every save silently
+  // dropped the value (falling back to DEFAULT_AUTHOR on every read) and
+  // any code path using the INSERT ... author column (savePost()) would
+  // outright fail with "column author does not exist".
+  await sql`ALTER TABLE posts ADD COLUMN IF NOT EXISTS author TEXT NOT NULL DEFAULT ''`;
   await sql`
     CREATE TABLE IF NOT EXISTS post_redirects (
       old_slug TEXT PRIMARY KEY,

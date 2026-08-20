@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getPosts, getPost, savePosts, deletePost, type Post } from "@/lib/posts";
+import { getPosts, getPost, savePost, deletePost, type Post } from "@/lib/posts";
 import { recordSlugRename } from "@/lib/redirects";
 import { getSession } from "@/lib/session";
 import { dbErrorMessage } from "@/lib/db";
@@ -41,15 +41,19 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
     }
   }
 
-  posts[idx] = {
+  const updated: Post = {
     ...body,
     slug: nextSlug,
     content: body.content || "",
     updatedAt: new Date().toISOString().slice(0, 10),
   };
   try {
-    await savePosts(posts);
+    // slug is the primary key, so on a rename this INSERTs a brand-new row
+    // for nextSlug rather than updating in place — the old row has to be
+    // deleted explicitly or it's left behind as an orphaned duplicate.
+    await savePost(updated);
     if (renamed) {
+      await deletePost(params.slug);
       await recordSlugRename(params.slug, nextSlug);
     }
   } catch (err) {

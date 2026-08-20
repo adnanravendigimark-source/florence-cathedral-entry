@@ -179,7 +179,12 @@ export async function getPost(slug: string): Promise<Post | null> {
 }
 
 export async function savePost(post: Post): Promise<void> {
-  const contentValue = post.content;
+  // `content` is a JSONB column (holds either the old ContentBlock[] shape
+  // or, since the TiptapArticleEditor migration, a plain HTML string) — it
+  // must be written as JSON.stringify(...)::jsonb like every other jsonb
+  // column in this file, or Postgres tries to parse the raw HTML itself as
+  // JSON and rejects it outright (a real HTML string is never valid JSON).
+  const contentValue = JSON.stringify(post.content || "");
   await sql`
     INSERT INTO posts (
       slug, title, meta_title, meta_description, category, excerpt,
@@ -194,7 +199,7 @@ export async function savePost(post: Post): Promise<void> {
       ${post.date}, ${post.updatedAt || post.date}, ${post.image}, ${post.imageAlt},
       ${post.author}, ${post.recommendedTourId},
       ${post.recommendedTourAfterBlock ?? null},
-      ${contentValue}, ${post.ctaHeading}, ${post.ctaBody},
+      ${contentValue}::jsonb, ${post.ctaHeading}, ${post.ctaBody},
       ${post.ctaButtonText}, ${post.ctaButtonHref},
       ${post.focusKeyword || ""}, ${!!post.noIndex}, ${!!post.noFollow},
       ${post.canonicalUrl || ""}, ${post.ogTitle || ""}, ${post.ogDescription || ""},
@@ -254,15 +259,15 @@ export async function savePosts(posts: Post[]): Promise<void> {
     await sql`
       INSERT INTO posts (
         slug, title, meta_title, meta_description, category, excerpt,
-        quick_answer, read_time, date, updated_at, image, image_alt,
+        quick_answer, read_time, date, updated_at, image, image_alt, author,
         recommended_tour_id, recommended_tour_after_block, content, sort_order,
         cta_heading, cta_body, cta_button_text, cta_button_href, focus_keyword,
         no_index, no_follow, canonical_url, og_title, og_description, og_image
       ) VALUES (
         ${p.slug}, ${p.title}, ${p.metaTitle}, ${p.metaDescription}, ${p.category},
-        ${p.excerpt}, ${p.quickAnswer}, ${p.readTime}, ${p.date}, ${p.updatedAt || p.date}, ${p.image}, ${p.imageAlt},
+        ${p.excerpt}, ${p.quickAnswer}, ${p.readTime}, ${p.date}, ${p.updatedAt || p.date}, ${p.image}, ${p.imageAlt}, ${p.author || ""},
         ${p.recommendedTourId || ""}, ${p.recommendedTourAfterBlock ?? null},
-        ${p.content}, ${i},
+        ${JSON.stringify(p.content || "")}::jsonb, ${i},
         ${p.ctaHeading || ""}, ${p.ctaBody || ""}, ${p.ctaButtonText || ""}, ${p.ctaButtonHref || ""}, ${p.focusKeyword || ""},
         ${!!p.noIndex}, ${!!p.noFollow}, ${p.canonicalUrl || ""}, ${p.ogTitle || ""}, ${p.ogDescription || ""}, ${p.ogImage || ""}
       )
@@ -278,6 +283,7 @@ export async function savePosts(posts: Post[]): Promise<void> {
         updated_at = EXCLUDED.updated_at,
         image = EXCLUDED.image,
         image_alt = EXCLUDED.image_alt,
+        author = EXCLUDED.author,
         recommended_tour_id = EXCLUDED.recommended_tour_id,
         recommended_tour_after_block = EXCLUDED.recommended_tour_after_block,
         content = EXCLUDED.content,

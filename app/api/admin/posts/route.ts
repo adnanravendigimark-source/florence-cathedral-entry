@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getPosts, savePosts, type Post } from "@/lib/posts";
+import { getPosts, savePost, type Post } from "@/lib/posts";
 import { dbErrorMessage } from "@/lib/db";
 
 // Force this route to always run as a live serverless function rather than
@@ -34,14 +34,14 @@ export async function POST(req: Request) {
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  posts.push({
+  const newPost: Post = {
     ...body,
     date: body.date || today,
     content: body.content || "",
     updatedAt: today,
-  });
+  };
   try {
-    await savePosts(posts);
+    await savePost(newPost);
   } catch (err) {
     return NextResponse.json({ error: dbErrorMessage(err) }, { status: 500 });
   }
