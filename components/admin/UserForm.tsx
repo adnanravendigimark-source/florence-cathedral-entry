@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PAGE_KEYS, PAGE_LABELS, type PageKey } from "@/lib/pageAccess";
 import PasswordStrengthField from "./PasswordStrengthField";
+import { useToast } from "./Toast";
 
 const inputClass =
   "w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:border-canal-blue focus:outline-none focus:ring-1 focus:ring-canal-blue";
@@ -11,6 +12,7 @@ const labelClass = "mb-1 block text-sm font-medium text-stone-700";
 
 export default function UserForm() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"editor" | "admin">("editor");
@@ -62,13 +64,16 @@ export default function UserForm() {
     setSaving(false);
 
     if (!res.ok) {
-      setError(data.error || "Could not create user.");
+      const msg = data.error || "Could not create user.";
+      setError(msg);
+      showToast("error", msg);
       return;
     }
     setEmail("");
     setPassword("");
     setRole("editor");
     setPages([]);
+    showToast("success", "User created.");
     router.refresh();
   }
 

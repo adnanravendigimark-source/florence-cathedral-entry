@@ -8,6 +8,7 @@ import SeoFieldsCard from "./SeoFieldsCard";
 import SeoPreview from "./SeoPreview";
 import SocialPreview from "./SocialPreview";
 import CharCounter from "./CharCounter";
+import SaveBar from "./SaveBar";
 import { useToast } from "./Toast";
 import type { Post } from "@/lib/posts";
 import type { Tour } from "@/lib/data";
@@ -497,23 +498,12 @@ export default function PostForm({
         )}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-stone-200 bg-white/95 px-4 py-3 backdrop-blur sm:pl-[17rem]">
-        <div className="mx-auto flex max-w-4xl items-center justify-between gap-3">
-          <p className="text-xs text-stone-500">{dirty ? "Unsaved changes" : "All changes saved"}</p>
-          <div className="flex gap-3">
-            <button type="button" onClick={handleCancel} className="rounded-lg border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition hover:bg-stone-100">
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
-            >
-              {saving ? "Saving…" : isNew ? "Publish Post" : "Save Changes"}
-            </button>
-          </div>
-        </div>
-      </div>
+      <SaveBar
+        saving={saving}
+        label={isNew ? "Publish Post" : "Save Changes"}
+        onCancel={handleCancel}
+        note={dirty ? "Unsaved changes" : "All changes saved"}
+      />
     </form>
   );
 }

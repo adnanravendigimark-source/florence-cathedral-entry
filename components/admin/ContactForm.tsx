@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import IconPicker from "./IconPicker";
 import SeoFieldsCard from "./SeoFieldsCard";
 import RichTextEditor from "./RichTextEditor";
+import SaveBar from "./SaveBar";
+import { useToast } from "./Toast";
 import type { ContactPageContent, ContactReason } from "@/lib/contact";
 
 const inputClass =
@@ -31,14 +33,13 @@ function SectionCard({
 
 export default function ContactForm({ initial }: { initial: ContactPageContent }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [contact, setContact] = useState<ContactPageContent>(initial);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
   function update<K extends keyof ContactPageContent>(key: K, value: ContactPageContent[K]) {
     setContact((c) => ({ ...c, [key]: value }));
-    setSaved(false);
   }
 
   function updateReason(i: number, patch: Partial<ContactReason>) {
@@ -67,17 +68,18 @@ export default function ContactForm({ initial }: { initial: ContactPageContent }
     const data = await res.json().catch(() => ({}));
     setSaving(false);
     if (!res.ok) {
-      setError(data.error || "Save failed. Please try again.");
+      const msg = data.error || "Save failed. Please try again.";
+      setError(msg);
+      showToast("error", msg);
       return;
     }
-    setSaved(true);
+    showToast("success", "Saved — live at /contact now.");
     router.refresh();
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-      {saved && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">Saved — live at /contact now.</p>}
 
       <SectionCard title="Hero">
         <div>
@@ -179,21 +181,10 @@ export default function ContactForm({ initial }: { initial: ContactPageContent }
           ogDescription: contact.ogDescription,
           ogImage: contact.ogImage,
         }}
-        onChange={(patch) => {
-          setContact((c) => ({ ...c, ...patch }));
-          setSaved(false);
-        }}
+        onChange={(patch) => setContact((c) => ({ ...c, ...patch }))}
       />
 
-      <div className="border-t border-stone-200 pt-5">
-        <button
-          type="submit"
-          disabled={saving}
-          className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
-        >
-          {saving ? "Saving…" : "Save Changes"}
-        </button>
-      </div>
+      <SaveBar saving={saving} />
     </form>
   );
 }

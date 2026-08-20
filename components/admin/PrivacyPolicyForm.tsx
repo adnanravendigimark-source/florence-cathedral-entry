@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SeoFieldsCard from "./SeoFieldsCard";
 import RichTextEditor from "./RichTextEditor";
+import SaveBar from "./SaveBar";
+import { useToast } from "./Toast";
 import type { ContentBlock, ContentBlockType } from "@/lib/posts";
 import type { PrivacyPolicy } from "@/lib/legal";
 
@@ -16,14 +18,13 @@ function emptyBlock(type: ContentBlockType): ContentBlock {
 
 export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [policy, setPolicy] = useState<PrivacyPolicy>(initial);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
   function update<K extends keyof PrivacyPolicy>(key: K, value: PrivacyPolicy[K]) {
     setPolicy((p) => ({ ...p, [key]: value }));
-    setSaved(false);
   }
 
   function updateBlock(i: number, block: ContentBlock) {
@@ -60,21 +61,18 @@ export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy 
     const data = await res.json().catch(() => ({}));
     setSaving(false);
     if (!res.ok) {
-      setError(data.error || "Save failed. Please try again.");
+      const msg = data.error || "Save failed. Please try again.";
+      setError(msg);
+      showToast("error", msg);
       return;
     }
-    setSaved(true);
+    showToast("success", "Saved — live at /privacy-policy now.");
     router.refresh();
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5 pb-24">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-      {saved && (
-        <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
-          Saved — live at /privacy-policy now. The "last updated" date was set to today automatically.
-        </p>
-      )}
 
       <div className="rounded-2xl border border-stone-200 bg-white p-6 space-y-4">
         <div>
@@ -186,15 +184,7 @@ export default function PrivacyPolicyForm({ initial }: { initial: PrivacyPolicy 
         onChange={(patch) => setPolicy((p) => ({ ...p, ...patch }))}
       />
 
-      <div className="flex gap-3">
-        <button
-          type="submit"
-          disabled={saving}
-          className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
-        >
-          {saving ? "Saving…" : "Save Changes"}
-        </button>
-      </div>
+      <SaveBar saving={saving} />
     </form>
   );
 }

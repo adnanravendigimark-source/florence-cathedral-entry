@@ -128,6 +128,15 @@ const config: Config = {
           800: "#3F5360",
           900: "#2A3842",
         },
+        // Admin-panel accent tokens, driven by the theme colors set on the
+        // Homepage admin page (see app/layout.tsx, which writes these as
+        // CSS variables). Used across every components/admin/* form.
+        canal: {
+          blue: "rgb(var(--color-canal-blue) / <alpha-value>)",
+          primary: "rgb(var(--color-canal-primary) / <alpha-value>)",
+          orange: "rgb(var(--color-canal-primary) / <alpha-value>)",
+          ink: "rgb(var(--color-canal-ink) / <alpha-value>)",
+        },
       },
       fontFamily: {
         display: ["var(--font-display)", "Cinzel", "Outfit", "system-ui", "sans-serif"],

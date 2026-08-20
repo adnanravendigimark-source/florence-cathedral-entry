@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { PAGE_KEYS, PAGE_LABELS, type PageKey } from "@/lib/pageAccess";
 import type { SafeUser } from "@/lib/users";
 import PasswordStrengthField from "./PasswordStrengthField";
+import { useToast } from "./Toast";
 
 const inputClass =
   "w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:border-canal-blue focus:outline-none focus:ring-1 focus:ring-canal-blue";
@@ -12,6 +13,7 @@ const labelClass = "mb-1 block text-sm font-medium text-stone-700";
 
 export default function UserEditForm({ user, onCancel }: { user: SafeUser; onCancel?: () => void }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [email, setEmail] = useState(user.email);
   const [role, setRole] = useState<"editor" | "admin">(user.role);
   const [pages, setPages] = useState<PageKey[]>(user.pages);
@@ -79,12 +81,15 @@ export default function UserEditForm({ user, onCancel }: { user: SafeUser; onCan
     setSaving(false);
 
     if (!res.ok) {
-      setError(data.error || "Save failed.");
+      const msg = data.error || "Save failed.";
+      setError(msg);
+      showToast("error", msg);
       return;
     }
     setPassword("");
     setConfirmPassword("");
     setSaved(true);
+    showToast("success", "Saved — they'll see these changes next time they log in.");
     router.refresh();
   }
 

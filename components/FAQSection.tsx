@@ -1,5 +1,6 @@
 import { getFaqs } from "@/lib/data";
 import { getHomepageContent } from "@/lib/homepage";
+import FaqAccordion from "./FaqAccordion";
 
 export default async function FAQSection() {
   const [faqs, { sections }] = await Promise.all([getFaqs(), getHomepageContent()]);
@@ -25,25 +26,7 @@ export default async function FAQSection() {
           </h2>
         </div>
 
-        <div className="mt-10 space-y-3">
-          {faqs.map((f) => (
-            <details
-              key={f.id || f.question}
-              className="group rounded-2xl border border-[#E8ECEF] bg-white p-5 sm:p-5.5 shadow-sm transition-all duration-200 open:border-[#CBD5E1] open:shadow-md"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-[#112338]">
-                <span className="font-serif text-[14.5px] sm:text-base font-bold pr-3">{f.question}</span>
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FAF8F5] text-[#112338] text-xs border border-[#E2E8F0] transition group-open:rotate-45 group-open:bg-[#112338] group-open:text-white">
-                  +
-                </span>
-              </summary>
-              <div
-                className="rich-content mt-3 text-xs sm:text-[13px] leading-relaxed text-[#556476] border-t border-gray-100 pt-3"
-                dangerouslySetInnerHTML={{ __html: f.answer }}
-              />
-            </details>
-          ))}
-        </div>
+        <FaqAccordion faqs={faqs} />
       </div>
       <script
         type="application/ld+json"

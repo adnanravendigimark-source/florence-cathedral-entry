@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "./RichTextEditor";
+import SaveBar from "./SaveBar";
+import { useToast } from "./Toast";
 import type { FAQ } from "@/lib/data";
 
 const inputClass =
@@ -10,16 +12,15 @@ const inputClass =
 
 export default function FaqsForm({ initial }: { initial: FAQ[] }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [faqs, setFaqs] = useState<FAQ[]>(initial);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
   function update(i: number, field: keyof FAQ, value: string) {
     const next = [...faqs];
     next[i] = { ...next[i], [field]: value };
     setFaqs(next);
-    setSaved(false);
   }
 
   function addFaq() {
@@ -41,17 +42,18 @@ export default function FaqsForm({ initial }: { initial: FAQ[] }) {
     });
     setSaving(false);
     if (!res.ok) {
-      setError("Save failed. Please try again.");
+      const msg = "Save failed. Please try again.";
+      setError(msg);
+      showToast("error", msg);
       return;
     }
-    setSaved(true);
+    showToast("success", "Saved — live on the homepage FAQ section now.");
     router.refresh();
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 pb-24">
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-      {saved && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">Saved — live on the homepage FAQ section now.</p>}
 
       {faqs.map((faq, i) => (
         <div key={i} className="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
@@ -85,15 +87,7 @@ export default function FaqsForm({ initial }: { initial: FAQ[] }) {
         + Add FAQ
       </button>
 
-      <div className="border-t border-stone-200 pt-5">
-        <button
-          type="submit"
-          disabled={saving}
-          className="rounded-lg bg-canal-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-canal-primary/90 disabled:opacity-60"
-        >
-          {saving ? "Saving…" : "Save Changes"}
-        </button>
-      </div>
+      <SaveBar saving={saving} />
     </form>
   );
 }
