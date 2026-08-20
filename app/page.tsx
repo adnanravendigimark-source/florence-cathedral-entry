@@ -3,6 +3,9 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import TourGrid from "@/components/TourGrid";
 import WhatYouSee from "@/components/WhatYouSee";
+import DomeClimbExperience from "@/components/DomeClimbExperience";
+import PracticalInfo from "@/components/PracticalInfo";
+import PriceComparison from "@/components/PriceComparison";
 import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
 import CtaBanner from "@/components/CtaBanner";
@@ -62,6 +65,9 @@ export default async function HomePage() {
         <Hero />
         <TourGrid />
         <WhatYouSee />
+        <DomeClimbExperience />
+        <PracticalInfo />
+        <PriceComparison />
         <BlogSection />
         <FAQSection />
         <CtaBanner />
