@@ -13,54 +13,34 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0B1B2B",
+          background: "linear-gradient(135deg, #34412D 0%, #1d2519 100%)",
           borderRadius: "40px",
+          border: "4px solid #78816A",
         }}
       >
         <svg
-          width="120"
-          height="120"
+          width="110"
+          height="110"
           viewBox="0 0 48 48"
           fill="none"
         >
-          {/* Base drum with circular oculi windows */}
-          <rect x="8" y="34" width="32" height="7" rx="1.5" fill="#FAF8F5" />
-          <circle cx="14" cy="37.5" r="1.5" fill="#0B1B2B" />
-          <circle cx="20" cy="37.5" r="1.5" fill="#0B1B2B" />
-          <circle cx="24" cy="37.5" r="1.5" fill="#0B1B2B" />
-          <circle cx="28" cy="37.5" r="1.5" fill="#0B1B2B" />
-          <circle cx="34" cy="37.5" r="1.5" fill="#0B1B2B" />
-
-          {/* Brunelleschi's iconic pointed terracotta dome */}
           <path
-            d="M8 34 C10 18, 20 12, 24 8 C28 12, 38 18, 40 34 Z"
-            fill="#B85D3E"
+            d="M6 34C6 24 14 16 24 16C34 16 42 24 42 34"
+            stroke="#D8D0BE"
+            strokeWidth="2.5"
+            strokeLinecap="round"
           />
-
-          {/* White marble ribs */}
           <path
-            d="M24 8 C24 16, 24 26, 24 34"
-            stroke="#FAF8F5"
+            d="M10 28C10 20.5 16.2 14.5 24 14.5C31.8 14.5 38 20.5 38 28"
+            stroke="#78816A"
             strokeWidth="2"
-            strokeLinecap="round"
+            strokeDasharray="3 2"
           />
-          <path
-            d="M24 8 C19 16, 14 26, 13 34"
-            stroke="#FAF8F5"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-          <path
-            d="M24 8 C29 16, 34 26, 35 34"
-            stroke="#FAF8F5"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-
-          {/* Marble Lantern & Golden sphere */}
-          <rect x="21.5" y="4" width="5" height="4.5" fill="#FAF8F5" rx="0.5" />
-          <circle cx="24" cy="3" r="1.8" fill="#E2A03F" stroke="#B85D3E" strokeWidth="0.6" />
-          <line x1="24" y1="1" x2="24" y2="0" stroke="#FAF8F5" strokeWidth="1" />
+          <path d="M12 34V26C12 24.5 13.5 23 15 23C16.5 23 18 24.5 18 26V34" stroke="#F4F0E6" strokeWidth="2" />
+          <path d="M21 34V24C21 22.5 22.5 21 24 21C25.5 21 27 22.5 27 24V34" stroke="#F4F0E6" strokeWidth="2" />
+          <path d="M30 34V26C30 24.5 31.5 23 33 23C34.5 23 36 24.5 36 26V34" stroke="#F4F0E6" strokeWidth="2" />
+          <path d="M19 12L29 20M29 12L19 20" stroke="#D8D0BE" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M4 36H44" stroke="#78816A" strokeWidth="3" strokeLinecap="round" />
         </svg>
       </div>
     ),
