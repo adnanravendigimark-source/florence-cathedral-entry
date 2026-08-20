@@ -75,12 +75,12 @@ export default function BlogSearchGrid({
   return (
     <div>
       {/* Header bar: Count & Sort */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-warmstone-200/80 pb-4">
-        <p className="text-xs font-medium text-charcoal-600">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E8ECEF] pb-4">
+        <p className="text-xs font-medium text-[#556476]">
           Showing {sortedPosts.length === 0 ? 0 : start + 1} –{" "}
           {Math.min(start + PAGE_SIZE, sortedPosts.length)} of {sortedPosts.length} articles
           {selectedCategory && selectedCategory !== "All" && (
-            <span className="ml-2 inline-flex items-center gap-1 rounded-md bg-warmstone-200 px-2 py-0.5 text-[11px] font-semibold text-charcoal-800">
+            <span className="ml-2 inline-flex items-center gap-1 rounded-md bg-[#FAF8F5] border border-[#ECE8DE] px-2 py-0.5 text-[11px] font-semibold text-[#B85D3E]">
               {selectedCategory}
               <button
                 type="button"
@@ -103,12 +103,12 @@ export default function BlogSearchGrid({
               id="sort-select"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
-              className="appearance-none rounded-lg border border-warmstone-300 bg-cream-50 py-1.5 pl-3 pr-8 text-xs font-semibold text-charcoal-800 shadow-sm transition hover:border-olive-700 focus:border-olive-700 focus:outline-none cursor-pointer"
+              className="appearance-none rounded-lg border border-[#CBD5E1] bg-white py-1.5 pl-3 pr-8 text-xs font-semibold text-[#112338] shadow-sm transition hover:border-[#112338] focus:border-[#112338] focus:outline-none cursor-pointer"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
             </select>
-            <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-charcoal-600">
+            <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[#718096]">
               ▾
             </span>
           </div>
@@ -117,7 +117,7 @@ export default function BlogSearchGrid({
 
       {/* Grid */}
       {sortedPosts.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-warmstone-300 p-12 text-center text-sm text-charcoal-600">
+        <div className="mt-8 rounded-2xl border border-dashed border-[#CBD5E1] p-12 text-center text-sm text-[#718096]">
           No articles found matching your criteria.
         </div>
       ) : (
@@ -126,9 +126,9 @@ export default function BlogSearchGrid({
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-warmstone-200 bg-cream-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-olive-700/40 hover:shadow-md"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E8ECEF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#CBD5E1] hover:shadow-lg"
             >
-              <div className="relative aspect-[16/10] overflow-hidden bg-warmstone-200">
+              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
                 <SafeImage
                   src={post.image}
                   alt={post.imageAlt || post.title}
@@ -141,36 +141,36 @@ export default function BlogSearchGrid({
               <div className="flex flex-1 flex-col p-5">
                 {/* Category Pill */}
                 <div className="mb-2.5">
-                  <span className="inline-block rounded bg-[#414E36] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cream-50">
+                  <span className="inline-block rounded-md bg-[#FAF8F5] border border-[#ECE8DE] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#B85D3E]">
                     {post.category}
                   </span>
                 </div>
 
                 {/* Date and Read Time */}
-                <div className="flex items-center gap-3 text-[11px] font-medium text-sage-600">
+                <div className="flex items-center gap-3 text-[11px] font-medium text-[#718096]">
                   <span className="inline-flex items-center gap-1">
-                    <CalendarIcon className="h-3.5 w-3.5 text-sage-500" />
+                    <CalendarIcon className="h-3.5 w-3.5 text-[#B85D3E]" />
                     {formatDate(post.date)}
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <ClockPayIcon className="h-3.5 w-3.5 text-sage-500" />
+                    <ClockPayIcon className="h-3.5 w-3.5 text-[#B85D3E]" />
                     {post.readTime}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h2 className="mt-2.5 line-clamp-2 font-display text-[15px] font-bold leading-snug text-charcoal-900 transition-colors group-hover:text-olive-800">
+                <h2 className="mt-2.5 line-clamp-2 font-serif text-[15px] font-bold leading-snug text-[#112338] transition-colors group-hover:text-[#B85D3E]">
                   {post.title}
                 </h2>
 
                 {/* Excerpt */}
-                <p className="mt-2 line-clamp-2 flex-1 text-xs leading-relaxed text-charcoal-600">
+                <p className="mt-2 line-clamp-2 flex-1 text-xs leading-relaxed text-[#556476]">
                   {post.excerpt}
                 </p>
 
                 {/* Read More link */}
-                <div className="mt-4 pt-2">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-charcoal-900 transition group-hover:text-olive-700">
+                <div className="mt-4 pt-2 border-t border-gray-100">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#112338] transition group-hover:text-[#B85D3E]">
                     Read More <span className="transition-transform group-hover:translate-x-1">→</span>
                   </span>
                 </div>
@@ -188,13 +188,12 @@ export default function BlogSearchGrid({
             onClick={() => goTo(currentPage - 1)}
             disabled={currentPage === 1}
             aria-label="Previous page"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-warmstone-300 bg-cream-50 text-xs font-bold text-charcoal-700 transition hover:border-olive-700 disabled:opacity-30 disabled:hover:border-warmstone-300"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#CBD5E1] bg-white text-xs font-bold text-[#112338] transition hover:border-[#112338] disabled:opacity-30 disabled:hover:border-[#CBD5E1]"
           >
             ‹
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
-            // Display page button if near current page or start/end
             if (
               totalPages > 6 &&
               p !== 1 &&
@@ -203,7 +202,7 @@ export default function BlogSearchGrid({
             ) {
               if (p === 2 || p === totalPages - 1) {
                 return (
-                  <span key={p} className="px-1 text-xs text-charcoal-400">
+                  <span key={p} className="px-1 text-xs text-[#718096]">
                     ...
                   </span>
                 );
@@ -219,8 +218,8 @@ export default function BlogSearchGrid({
                 aria-current={p === currentPage ? "page" : undefined}
                 className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-bold transition ${
                   p === currentPage
-                    ? "bg-olive-700 text-cream-50 shadow-sm"
-                    : "border border-warmstone-300 bg-cream-50 text-charcoal-700 hover:border-olive-700"
+                    ? "bg-[#112338] text-white shadow-sm"
+                    : "border border-[#CBD5E1] bg-white text-[#112338] hover:border-[#112338]"
                 }`}
               >
                 {p}
@@ -233,7 +232,7 @@ export default function BlogSearchGrid({
             onClick={() => goTo(currentPage + 1)}
             disabled={currentPage === totalPages}
             aria-label="Next page"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-warmstone-300 bg-cream-50 text-xs font-bold text-charcoal-700 transition hover:border-olive-700 disabled:opacity-30 disabled:hover:border-warmstone-300"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#CBD5E1] bg-white text-xs font-bold text-[#112338] transition hover:border-[#112338] disabled:opacity-30 disabled:hover:border-[#CBD5E1]"
           >
             ›
           </button>

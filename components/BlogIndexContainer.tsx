@@ -35,15 +35,15 @@ export default function BlogIndexContainer({
     <div id="articles-section" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:grid lg:grid-cols-[1fr_280px] lg:gap-10">
       <div>
         <div className="mb-6">
-          <h2 className="font-display text-2xl font-bold text-navy-900 sm:text-3xl">Latest Guides</h2>
-          <p className="mt-1.5 text-xs text-navy-700 sm:text-sm">
+          <h2 className="font-serif text-2xl font-bold text-[#112338] sm:text-3xl">Latest Guides</h2>
+          <p className="mt-1.5 text-xs text-[#556476] sm:text-sm">
             Expert tips, travel guides and everything you need to know about Florence Duomo and Dome climb passes.
           </p>
         </div>
 
         <div>
           {posts.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-tuscan-300 p-12 text-center text-sm text-navy-600">
+            <p className="rounded-2xl border border-dashed border-[#CBD5E1] p-12 text-center text-sm text-[#718096]">
               {emptyStateText}
             </p>
           ) : (

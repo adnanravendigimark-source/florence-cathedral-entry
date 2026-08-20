@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans, Cinzel } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 import { resolveRobots } from "@/lib/seo";
 import { getSiteChrome } from "@/lib/homepage";
@@ -8,9 +8,9 @@ import "./globals.css";
 
 export const dynamic = "force-dynamic";
 
-const displayFont = Cinzel({
+const displayFont = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-display",
 });
 

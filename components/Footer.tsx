@@ -1,9 +1,5 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
-import { ShieldCheckIcon, LockIcon } from "./icons";
 
 function FacebookIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -23,246 +19,218 @@ function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-function PinterestIcon({ className = "h-4 w-4" }: { className?: string }) {
+function TripadvisorIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.225-.174.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
+      <circle cx="7" cy="12" r="3" />
+      <circle cx="17" cy="12" r="3" />
+      <circle cx="7" cy="12" r="1" fill="currentColor" />
+      <circle cx="17" cy="12" r="1" fill="currentColor" />
+      <path d="M12 8c-3 0-6 2-6 4 0 1 2 2 3 3l3 2 3-2c1-1 3-2 3-3 0-2-3-4-6-4z" />
     </svg>
   );
 }
 
-function EmailEnvelopeIcon({ className = "h-4 w-4" }: { className?: string }) {
+function YoutubeIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   );
 }
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [agreed, setAgreed] = useState(false);
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-    }
-  };
-
   return (
-    <footer className="border-t border-tuscan-300/80 bg-tuscan-100/90 text-navy-900 transition-colors">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Info */}
-          <div className="space-y-4 lg:col-span-1">
+    <footer className="bg-[#0B1B2B] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-20">
+        {/* Top 5 Columns */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 lg:gap-8">
+          {/* Col 1: Brand & Social (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
             <Logo
-              line1="DUOMO FLORENCE"
-              line2="TICKETS & DOME CLIMB"
+              line1="FLORENCE"
+              line2="— CATHEDRAL ENTRY —"
+              theme="dark"
             />
-            <p className="text-xs leading-relaxed text-navy-700">
-              We help you experience the best of Florence Cathedral with verified passes, guaranteed Dome Climb access, and travel guides.
+            <p className="text-xs text-[#8A9BA8] leading-relaxed max-w-sm pt-1">
+              Official Duomo tickets and tours. Skip the line, climb the Dome, and experience Florence from a whole new perspective.
             </p>
-            <div className="flex items-center gap-2.5 pt-2 text-navy-800">
+            <div className="flex items-center gap-3 pt-3">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-tuscan-300 bg-marble-50 text-navy-700 transition hover:border-navy-700 hover:text-navy-700"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/80 transition hover:border-white hover:text-white hover:bg-white/10"
               >
-                <FacebookIcon className="h-3.5 w-3.5" />
+                <FacebookIcon className="h-4 w-4" />
               </a>
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-tuscan-300 bg-marble-50 text-navy-700 transition hover:border-navy-700 hover:text-navy-700"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/80 transition hover:border-white hover:text-white hover:bg-white/10"
               >
-                <InstagramIcon className="h-3.5 w-3.5" />
+                <InstagramIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://pinterest.com"
+                href="https://tripadvisor.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Pinterest"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-tuscan-300 bg-marble-50 text-navy-700 transition hover:border-navy-700 hover:text-navy-700"
+                aria-label="TripAdvisor"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/80 transition hover:border-white hover:text-white hover:bg-white/10"
               >
-                <PinterestIcon className="h-3.5 w-3.5" />
+                <TripadvisorIcon className="h-4 w-4" />
               </a>
               <a
-                href="/contact"
-                aria-label="Contact Email"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-tuscan-300 bg-marble-50 text-navy-700 transition hover:border-navy-700 hover:text-navy-700"
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/80 transition hover:border-white hover:text-white hover:bg-white/10"
               >
-                <EmailEnvelopeIcon className="h-3.5 w-3.5" />
+                <YoutubeIcon className="h-4 w-4" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <p className="font-display text-xs font-bold uppercase tracking-wider text-navy-900">
+          {/* Col 2: Quick Links (2 cols) */}
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
               Quick Links
-            </p>
-            <ul className="mt-4 space-y-2 text-xs">
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-xs text-[#8A9BA8]">
               <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
+                <Link href="/" className="transition hover:text-white">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/#tours" className="transition hover:text-white">
                   Duomo Tickets
                 </Link>
               </li>
               <li>
-                <Link href="/#dome-climb" className="text-navy-700 transition hover:text-terracotta-600">
-                  Dome Climb Access
+                <Link href="/#dome-climb" className="transition hover:text-white">
+                  Dome Climb
                 </Link>
               </li>
               <li>
-                <Link href="/#highlights" className="text-navy-700 transition hover:text-terracotta-600">
-                  Cathedral Highlights
+                <Link href="/#tours" className="transition hover:text-white">
+                  Guided Tours
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-navy-700 transition hover:text-terracotta-600">
-                  Florence Guides
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-navy-700 transition hover:text-terracotta-600">
+                <Link href="/about" className="transition hover:text-white">
                   About Us
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Top Tours */}
-          <div>
-            <p className="font-display text-xs font-bold uppercase tracking-wider text-navy-900">
-              Popular Passes
-            </p>
-            <ul className="mt-4 space-y-2 text-xs">
               <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
-                  Brunelleschi Pass
+                <Link href="/blog" className="transition hover:text-white">
+                  Blog
                 </Link>
               </li>
               <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
-                  Giotto Pass (Bell Tower)
-                </Link>
-              </li>
-              <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
-                  Ghiberti Pass (Museum)
-                </Link>
-              </li>
-              <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
-                  VIP Guided Dome Tour
-                </Link>
-              </li>
-              <li>
-                <Link href="/#tours" className="text-navy-700 transition hover:text-terracotta-600">
-                  Florence Super Combo
+                <Link href="/contact" className="transition hover:text-white">
+                  Contact Us
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Help */}
-          <div>
-            <p className="font-display text-xs font-bold uppercase tracking-wider text-navy-900">
-              Help &amp; Info
-            </p>
-            <ul className="mt-4 space-y-2 text-xs">
+          {/* Col 3: Top Experiences (2 cols) */}
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Top Experiences
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-xs text-[#8A9BA8]">
               <li>
-                <Link href="/#faq" className="text-navy-700 transition hover:text-terracotta-600">
-                  Duomo FAQs
+                <Link href="/#tours" className="transition hover:text-white">
+                  Duomo &amp; Dome Climb
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-navy-700 transition hover:text-terracotta-600">
-                  Cancellation Policy
+                <Link href="/#tours" className="transition hover:text-white">
+                  Duomo Complex Tickets
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-navy-700 transition hover:text-terracotta-600">
+                <Link href="/#tours" className="transition hover:text-white">
+                  Guided Tour with Dome
+                </Link>
+              </li>
+              <li>
+                <Link href="/#tours" className="transition hover:text-white">
+                  Giotto&apos;s Bell Tower Tickets
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Help (2 cols) */}
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Help
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-xs text-[#8A9BA8]">
+              <li>
+                <Link href="/#faq" className="transition hover:text-white">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="transition hover:text-white">
+                  Booking Info
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="transition hover:text-white">
                   Terms &amp; Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-navy-700 transition hover:text-terracotta-600">
+                <Link href="/privacy-policy" className="transition hover:text-white">
                   Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-navy-700 transition hover:text-terracotta-600">
-                  Contact Support
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Newsletter Form */}
-          <div>
-            <p className="font-display text-xs font-bold uppercase tracking-wider text-navy-900">
-              Florence Travel Club
-            </p>
-            <p className="mt-2 text-xs text-navy-700 leading-relaxed">
-              Get tips, dome availability alerts, and exclusive offers for your Florence vacation.
-            </p>
-            {subscribed ? (
-              <p className="mt-3 text-xs font-semibold text-terracotta-600">✓ Thank you for subscribing!</p>
-            ) : (
-              <form onSubmit={handleSubmit} className="mt-3 space-y-2">
-                <div className="flex rounded-lg border border-tuscan-300 bg-marble-50 overflow-hidden focus-within:border-navy-700">
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email..."
-                    className="w-full bg-transparent px-3 py-2 text-xs text-navy-900 placeholder-navy-400 focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    aria-label="Subscribe"
-                    className="flex items-center justify-center bg-navy-700 px-3 text-marble-50 transition hover:bg-navy-800"
-                  >
-                    →
-                  </button>
-                </div>
-                <label className="flex items-start gap-1.5 text-[11px] text-navy-600 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={agreed}
-                    onChange={(e) => setAgreed(e.target.checked)}
-                    className="mt-0.5 rounded border-tuscan-300 text-navy-700 focus:ring-navy-700"
-                  />
-                  <span>I agree to receive emails and updates.</span>
-                </label>
-              </form>
-            )}
+          {/* Col 5: Contact Us (2 cols) */}
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Contact Us
+            </h3>
+            <ul className="mt-4 space-y-3 text-xs text-[#8A9BA8]">
+              <li className="flex items-start gap-2.5">
+                <span className="mt-0.5 text-white/80">✉</span>
+                <a href="mailto:info@florencecathedralentry.com" className="hover:text-white transition break-all">
+                  info@florencecathedralentry.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="mt-0.5 text-white/80">📞</span>
+                <a href="tel:+3905512345678" className="hover:text-white transition">
+                  +39 055 1234 5678
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="mt-0.5 text-white/80">📍</span>
+                <span>
+                  Piazza del Duomo,<br />50122 Firenze FI, Italy
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-tuscan-300 pt-6 text-[11px] text-navy-700 sm:flex-row">
-          <p>© {new Date().getFullYear()} Duomo Florence Tickets. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-6">
-            <span className="inline-flex items-center gap-1.5">
-              <LockIcon className="h-3.5 w-3.5 text-navy-700" />
-              Secure Booking
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <ShieldCheckIcon className="h-3.5 w-3.5 text-navy-700" />
-              Official Partner Verified
-            </span>
-            <span>Made with ❤️ in Florence</span>
-          </div>
+        <div className="mt-14 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-[#8A9BA8]">
+          <p>© 2024 Florence Cathedral Entry. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            Made with <span className="text-red-400">♥</span> in Florence
+          </p>
         </div>
       </div>
     </footer>

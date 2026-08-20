@@ -28,33 +28,35 @@ export default async function PrivacyPolicyPage() {
   return (
     <>
       <Header />
-      <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
-        <h1 className="font-display text-3xl font-bold text-charcoal-800 sm:text-4xl">{policy.title}</h1>
-        {policy.lastUpdated && (
-          <p className="mt-2 text-sm text-sage-600">{policy.lastUpdatedLabel}{policy.lastUpdated}</p>
-        )}
-
-        <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-charcoal-700">
-          {policy.content.map((block, i) => (
-            <div key={i}>
-              {block.type === "heading" && (
-                <h2 className="font-display text-xl font-semibold text-charcoal-800">{block.text}</h2>
-              )}
-              {block.type === "paragraph" && (
-                <div className="rich-content max-w-none" dangerouslySetInnerHTML={{ __html: block.text || "" }} />
-              )}
-              {block.type === "list" && (
-                <ul className="list-disc space-y-2 pl-5">
-                  {(block.items || []).map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-          {policy.content.length === 0 && (
-            <p className="text-sage-600">{policy.emptyStateText}</p>
+      <main className="bg-[#FAF8F5] min-h-screen py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <h1 className="font-serif text-3xl font-bold text-[#112338] sm:text-4xl">{policy.title}</h1>
+          {policy.lastUpdated && (
+            <p className="mt-2 text-xs sm:text-sm text-[#718096]">{policy.lastUpdatedLabel}{policy.lastUpdated}</p>
           )}
+
+          <div className="mt-8 space-y-6 text-sm sm:text-base leading-relaxed text-[#556476]">
+            {policy.content.map((block, i) => (
+              <div key={i}>
+                {block.type === "heading" && (
+                  <h2 className="font-serif text-lg sm:text-xl font-bold text-[#112338] mt-6 mb-2">{block.text}</h2>
+                )}
+                {block.type === "paragraph" && (
+                  <div className="rich-content max-w-none" dangerouslySetInnerHTML={{ __html: block.text || "" }} />
+                )}
+                {block.type === "list" && (
+                  <ul className="list-disc space-y-1.5 pl-5">
+                    {(block.items || []).map((item, j) => (
+                      <li key={j}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+            {policy.content.length === 0 && (
+              <p className="text-[#718096]">{policy.emptyStateText}</p>
+            )}
+          </div>
         </div>
       </main>
       <Footer />

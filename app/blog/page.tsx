@@ -31,9 +31,9 @@ export default async function BlogIndexPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#F7F4EC]">
+      <main className="min-h-screen bg-[#FAF8F5]">
         {/* Blog Hero Banner */}
-        <section className="relative overflow-hidden bg-navy-900 text-marble-100">
+        <section className="relative overflow-hidden bg-[#0B1B2B] text-white">
           <div className="absolute inset-0">
             <SafeImage
               src={heroImage || "/images/hero-duomo.jpg"}
@@ -43,37 +43,37 @@ export default async function BlogIndexPage() {
               sizes="100vw"
               className="object-cover object-center opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-900/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B2B] via-[#0B1B2B]/75 to-transparent" />
           </div>
 
           <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 text-center sm:text-left">
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="text-xs font-medium text-sky-200/80">
+            <nav aria-label="Breadcrumb" className="text-xs font-medium text-[#CBD5E1]">
               <ol className="flex items-center justify-center sm:justify-start gap-1.5">
                 <li>
-                  <Link href="/" className="hover:text-marble-50 transition-colors">
+                  <Link href="/" className="hover:text-white transition-colors">
                     Home
                   </Link>
                 </li>
-                <li className="text-sky-400/50">&gt;</li>
-                <li className="font-semibold text-marble-50" aria-current="page">
+                <li className="text-white/40">&gt;</li>
+                <li className="font-semibold text-white" aria-current="page">
                   Blog &amp; Guides
                 </li>
               </ol>
             </nav>
 
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-marble-50 sm:text-5xl lg:text-6xl">
+            <h1 className="mt-3.5 font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               {s.heading || "Duomo Florence Travel Guides"}
             </h1>
 
             {/* Decorative Divider */}
-            <div className="mt-5 flex items-center justify-center sm:justify-start gap-3 max-w-xs mx-auto sm:mx-0">
-              <span className="h-px flex-1 bg-marble-100/30" />
-              <span className="text-terracotta-400 font-bold">🏛️</span>
-              <span className="h-px flex-1 bg-marble-100/30" />
+            <div className="mt-4 flex items-center justify-center sm:justify-start gap-3 max-w-xs mx-auto sm:mx-0">
+              <span className="h-px flex-1 bg-white/20" />
+              <span className="text-[#E2A03F] text-sm">🏛️</span>
+              <span className="h-px flex-1 bg-white/20" />
             </div>
 
-            <p className="mt-4 max-w-lg text-xs leading-relaxed text-sky-100/90 sm:text-sm">
+            <p className="mt-3.5 max-w-lg text-xs leading-relaxed text-[#CBD5E1] sm:text-sm">
               {s.subheading || "Tips, pass comparisons and architectural guides to help you experience Florence Cathedral and Brunelleschi's Dome."}
             </p>
           </div>

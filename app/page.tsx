@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import FeaturedTour from "@/components/FeaturedTour";
 import TourGrid from "@/components/TourGrid";
-import DuomoHighlights from "@/components/DuomoHighlights";
 import WhatYouSee from "@/components/WhatYouSee";
-import DomeClimbExperience from "@/components/DomeClimbExperience";
-import PracticalInfo from "@/components/PracticalInfo";
-import PriceComparison from "@/components/PriceComparison";
-import FAQSection from "@/components/FAQSection";
 import BlogSection from "@/components/BlogSection";
+import FAQSection from "@/components/FAQSection";
+import CtaBanner from "@/components/CtaBanner";
 import Footer from "@/components/Footer";
 import { getTours } from "@/lib/data";
 import { getHomepageContent } from "@/lib/homepage";
@@ -61,16 +57,11 @@ export default async function HomePage() {
       <Header />
       <main>
         <Hero />
-        <FeaturedTour />
         <TourGrid />
-        <DuomoHighlights />
         <WhatYouSee />
-        <DomeClimbExperience />
-        <PracticalInfo />
-        <PriceComparison />
         <BlogSection />
         <FAQSection />
-        <div className="h-20 sm:hidden" aria-hidden="true" />
+        <CtaBanner />
       </main>
       <Footer />
       {productJsonLd.map((data, i) => (

@@ -1,193 +1,129 @@
 import Image from "next/image";
-import SafeImage from "./SafeImage";
+import Link from "next/link";
 import { getHomepageContent } from "@/lib/homepage";
 
 export default async function Hero() {
   const content = await getHomepageContent();
-  const gallery = content.heroGallery;
 
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden bg-gradient-to-b from-navy-800 via-navy-700 to-navy-900 text-marble-100 pt-10 pb-16 lg:pt-14 lg:pb-20"
-    >
-      {/* Background Architectural Watermark & Renaissance Glow Overlay */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-terracotta-500/15 blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-sky-500/15 blur-[120px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,201,170,0.06)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
+    <section className="relative w-full bg-[#FAF8F5] overflow-hidden">
+      {/* Full-bleed Panoramic Background Image */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Image
+          src="/images/florence-hero-panoramic.jpg"
+          alt="Florence Cathedral Brunelleschi Dome and Skyline"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[75%_top] sm:object-right-top lg:object-right"
+        />
+        {/* Responsive Gradient overlay ensuring text readability and seamless left fade */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 via-40% lg:via-50% to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#FAF8F5] to-transparent" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Dome Climb Live Alert Banner */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-terracotta-400/30 bg-terracotta-900/40 px-4 py-2.5 backdrop-blur-md mb-8 sm:mb-10 shadow-lg">
-          <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-terracotta-100">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terracotta-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-terracotta-500"></span>
-            </span>
-            <span>{content.featuredUrgencyText || "Dome Climb Time Slots Sell Out 2–3 Weeks in Advance · Reserve Early"}</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-sky-200">
-            <span className="hidden sm:inline">Official Quota Available</span>
+      {/* Hero Content Layer */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-10 lg:pt-14 pb-12 lg:pb-16">
+        <div className="max-w-xl">
+          {/* Top Eyebrow Tag */}
+          <p className="text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase text-[#B85D3E]">
+            DUOMO FLORENCE TICKETS | DOME CLIMB ACCESS
+          </p>
+
+          {/* Main Headline */}
+          <h1 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-[2.85rem] font-bold leading-[1.14] tracking-tight text-[#112338]">
+            Discover Florence<br />
+            From Its Most<br />
+            Iconic View
+          </h1>
+
+          {/* Short Terracotta Accent Line */}
+          <div className="mt-3.5 mb-5 h-[2.5px] w-10 rounded-full bg-[#B85D3E]" />
+
+          {/* Subtitle */}
+          <p className="text-xs sm:text-sm text-[#556476] leading-relaxed max-w-md">
+            Official Duomo tickets with Dome Climb access. Skip the line and experience the history, art and breathtaking views of Florence.
+          </p>
+
+          {/* Action Buttons */}
+          <div className="mt-6 flex flex-wrap items-center gap-3.5">
             <a
               href="#tours"
-              className="inline-flex items-center gap-1 rounded-lg bg-terracotta-500 hover:bg-terracotta-600 px-3 py-1 text-xs font-bold text-marble-50 transition-colors shadow-sm"
+              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-[#112338] px-6 py-3 text-xs font-semibold text-white shadow-md transition-all hover:bg-[#1a3452] hover:shadow-lg hover:-translate-y-0.5"
             >
-              Check Slots →
+              <span>Explore Tickets</span>
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+
+            <a
+              href="#tours"
+              className="group inline-flex items-center justify-center gap-2 rounded-lg border border-[#CBD5E1] bg-white/95 backdrop-blur-sm px-6 py-3 text-xs font-semibold text-[#112338] shadow-sm transition-all hover:bg-white hover:border-[#94A3B8] hover:-translate-y-0.5"
+            >
+              <span>Dome Climb Access</span>
+              <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>
         </div>
 
-        {/* Hero Main Grid: Left Copy & Right High-End Visual Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column (60% on desktop) */}
-          <div className="lg:col-span-7 flex flex-col items-start">
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-navy-900/70 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-sky-200 backdrop-blur-md">
-              <span className="text-terracotta-400">🏛️</span>
-              {content.heroBadge}
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="mt-5 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-bold leading-[1.12] tracking-tight text-marble-50">
-              {content.heroHeading}
-            </h1>
-
-            {/* Subheading */}
-            <div
-              className="rich-content rich-content-invert mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-marble-200/90"
-              dangerouslySetInnerHTML={{ __html: content.heroSubheading }}
-            />
-
-            {/* Primary Action Buttons & Guarantee Pill */}
-            <div className="mt-8 flex flex-wrap items-center gap-4 w-full sm:w-auto">
-              <a
-                href={content.heroCtaPrimaryHref || "#tours"}
-                className="group relative inline-flex items-center justify-center gap-3 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 px-8 py-4 text-base font-bold text-marble-50 shadow-xl shadow-terracotta-900/30 ring-1 ring-inset ring-terracotta-300/30 transition-all duration-200 hover:-translate-y-0.5"
-              >
-                <span>{content.heroCtaPrimaryText || "Book Dome Climb Tickets"}</span>
-                <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </a>
-
-              <a
-                href={content.heroCtaSecondaryHref || "#prices"}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-marble-200/30 bg-navy-800/80 hover:bg-navy-700/80 px-6 py-4 text-sm sm:text-base font-bold text-marble-100 backdrop-blur-md transition-all duration-200 hover:border-marble-200/60"
-              >
-                {content.heroCtaSecondaryText || "Compare Duomo Passes"}
-              </a>
-            </div>
-
-            {/* Key Confidence Factors */}
-            <div className="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-marble-100/10 w-full">
-              <div className="flex items-center gap-2 text-xs font-medium text-marble-200">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sky-500/20 text-sky-300 font-bold">✓</span>
-                <span>Timed Dome Entry</span>
+        {/* Floating Key Features Strip Bar */}
+        <div className="mt-10 lg:mt-14 rounded-2xl bg-white/95 backdrop-blur-md p-5 sm:p-6 shadow-xl shadow-black/[0.04] border border-[#EBECEF]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+            {/* Feature 1: Official Tickets */}
+            <div className="flex items-center gap-3.5 pt-3.5 sm:pt-0 sm:px-3 first:pt-0 first:px-0">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FAF8F5] text-[#112338] border border-[#ECE8DE]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-5 w-5">
+                  <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
+                  <path d="M13 5v2M13 17v2M13 11v2" />
+                </svg>
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-marble-200">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sky-500/20 text-sky-300 font-bold">✓</span>
-                <span>Instant Mobile Pass</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-marble-200">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sky-500/20 text-sky-300 font-bold">✓</span>
-                <span>100% Free 24h Cancel</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-marble-200">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sky-500/20 text-sky-300 font-bold">✓</span>
-                <span>72h Complex Access</span>
+              <div>
+                <h2 className="text-xs sm:text-[13px] font-bold text-[#112338]">Official Tickets</h2>
+                <p className="text-[11px] text-[#718096]">100% Authorized</p>
               </div>
             </div>
-          </div>
 
-          {/* Right Column: Hero Visual Feature Box & Floating Cards */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] w-full overflow-hidden rounded-3xl border-2 border-marble-200/20 shadow-2xl shadow-navy-950/60 bg-navy-900">
-              <SafeImage
-                src={content.heroImage || "/images/hero-duomo.jpg"}
-                alt={content.heroImageAlt || "Florence Duomo Cathedral and Brunelleschi Dome"}
-                fill
-                priority
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover transition-transform duration-700 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent" />
-
-              {/* Floating Highlight Card 1: 463 Steps Climb */}
-              <div className="absolute top-4 left-4 right-4 sm:right-auto sm:max-w-xs rounded-2xl border border-marble-100/20 bg-navy-900/85 p-3.5 backdrop-blur-md shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-terracotta-500/30 text-terracotta-300 text-lg">
-                    🧗
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-marble-50">Brunelleschi Dome Climb</p>
-                    <p className="text-[11px] text-sky-200">463 steps · 360° Florence skyline</p>
-                  </div>
-                </div>
+            {/* Feature 2: Skip The Line */}
+            <div className="flex items-center gap-3.5 pt-3.5 sm:pt-0 sm:px-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FAF8F5] text-[#112338] border border-[#ECE8DE]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-5 w-5">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
               </div>
+              <div>
+                <h2 className="text-xs sm:text-[13px] font-bold text-[#112338]">Skip The Line</h2>
+                <p className="text-[11px] text-[#718096]">Save time, enjoy more</p>
+              </div>
+            </div>
 
-              {/* Floating Highlight Card 2: Rating & Reviews */}
-              {content.ratingValue && (
-                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-marble-100/20 bg-navy-950/90 p-4 backdrop-blur-md shadow-xl">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-terracotta-500 text-marble-50 font-bold text-lg shadow-md">
-                        ★
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-base font-extrabold text-marble-50">{content.ratingValue}</p>
-                          <span className="text-xs font-semibold text-terracotta-400">Excellent</span>
-                        </div>
-                        <p className="text-xs text-sky-200">{content.ratingCount}</p>
-                      </div>
-                    </div>
-                    <a
-                      href="#tours"
-                      className="shrink-0 rounded-xl bg-marble-100 hover:bg-marble-200 px-3.5 py-2 text-xs font-bold text-navy-800 transition-colors shadow-sm"
-                    >
-                      Book Now
-                    </a>
-                  </div>
-                </div>
-              )}
+            {/* Feature 3: Dome Climb Access */}
+            <div className="flex items-center gap-3.5 pt-3.5 sm:pt-0 sm:px-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FAF8F5] text-[#112338] border border-[#ECE8DE]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-5 w-5">
+                  <path d="M4 22h16M7 22V14M17 22V14M12 22V14M4 14h16M12 4L4 14M12 4l8 10M12 2v2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-xs sm:text-[13px] font-bold text-[#112338]">Dome Climb Access</h2>
+                <p className="text-[11px] text-[#718096]">Climb Brunelleschi's Dome</p>
+              </div>
+            </div>
+
+            {/* Feature 4: 24/7 Support */}
+            <div className="flex items-center gap-3.5 pt-3.5 sm:pt-0 sm:px-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FAF8F5] text-[#112338] border border-[#ECE8DE]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-5 w-5">
+                  <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                  <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-xs sm:text-[13px] font-bold text-[#112338]">24/7 Support</h2>
+                <p className="text-[11px] text-[#718096]">We're here to help</p>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Bottom Interactive Thumbnail Carousel Strip */}
-        {gallery.length > 0 && (
-          <div className="mt-12 sm:mt-14 pt-8 border-t border-marble-100/10">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-sky-300">
-                Explore the Florence Cathedral Complex
-              </h3>
-              <span className="text-xs font-medium text-marble-300 hidden sm:inline">
-                Click any monument to jump to passes
-              </span>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {gallery.map((img, i) => (
-                <a
-                  key={img.label + i}
-                  href="#tours"
-                  className="group relative h-24 overflow-hidden rounded-xl border border-marble-100/15 bg-navy-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-terracotta-400/60"
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
-                    className="object-cover transition duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/30 to-transparent" />
-                  <span className="absolute bottom-2 left-2 right-2 truncate text-[11px] font-bold text-marble-50">
-                    {img.label}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
