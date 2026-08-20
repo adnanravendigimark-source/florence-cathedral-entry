@@ -27,7 +27,6 @@ export default function Logo({
             src={customSrc}
             alt={logoAlt}
             fill
-            priority
             sizes="44px"
             className="object-contain"
           />
